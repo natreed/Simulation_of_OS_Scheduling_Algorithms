@@ -6,10 +6,8 @@ from time import time
 #TODO: implement blocking
 
 
-running_proc = None
-time_slice = 10
-finished_list = []
 
+TIMESLICE = 10
 
 def switch_to_ready(proc):
     global time_slice, running_proc
@@ -27,7 +25,7 @@ def switch_to_run(proc):
     if (proc.cpu_time_remaining - time_slice) <= 0:
         proc.cpu_runtime = proc.start_time + proc.cpu_time_remaining
         proc.next_state = P_State.FINISHED
-        finished_list.append(proc)
+
     else:
         proc.next_state = P_State.READY
 
@@ -35,7 +33,9 @@ def switch_to_run(proc):
 
 
 def run_simulation(proc_list, scheduler):
-    global running_proc, time_slice
+    global time_slice
+    finished_list = []
+    running_proc = None
     scheduler.fetch_process()
 
 
