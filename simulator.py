@@ -40,14 +40,18 @@ def run_simulation(proc_list, scheduler):
 
         if next_proc.next_state == P_State.READY:
             p = switch_to_ready(next_proc)
+            p.p_state = P_State.READY
             scheduler.put_process(p)
             scheduler.empty = False
         elif next_proc.next_state == P_State.RUNNING:
             p = switch_to_run(next_proc)
+            p.p_state = P_State.RUNNING
             scheduler.put_process(p)
             scheduler.empty = False
         elif next_proc.next_state == P_State.FINISHED:
-            next_proc.turnaround_time = next_proc.finish_time - next_proc.instantiation_time
+            p = next_proc
+            p.turnaround_time = p.finish_time - p.instantiation_time
+            p.p_state = P_State.FINISHED
             scheduler.empty = False
             running_proc = None
 
