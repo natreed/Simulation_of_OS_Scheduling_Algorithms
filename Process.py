@@ -13,15 +13,14 @@ class P_State(enum.Enum):
 #The process is just the state of the process. The scheduler
 #will make changes as necessary to the process state
 class Process(object):
-    def __init__(self, _start_delay, _required_cpu_time, pid):
-        self.pid = pid
-
+    def __init__(self, _required_cpu_time, _pid):
+        self.pid = _pid
         self.p_state = P_State.CREATED
-        self.next_state = P_State.READY
+        self.next_state = P_State.RUNNING
         self.required_cpu_time = _required_cpu_time
         self.cpu_time_remaining = _required_cpu_time
-        self.start_delay = _start_delay
-        self.intantiation_time = 0
+        self.start_delay = 0
+        self.instantiation_time = 0
         self.finish_time = 0
         self.cpu_runtime = 0
         self.total_runtime = 0

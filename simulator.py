@@ -1,4 +1,7 @@
 from Process import P_State,  Process
+from FCFS import FCFS
+from Utilities import random_runtimes_gen, process_list_gen
+from time import time
 
 #TODO: implement blocking
 
@@ -19,8 +22,8 @@ def switch_to_ready(proc):
 def switch_to_run(proc):
     global running_proc, time_slice
     running_proc = proc
-    current_time = running_proc.
-
+    if proc.p_state == P_State.CREATED:
+        proc.start_time = time()
     if (proc.cpu_time_remaining - time_slice) <= 0:
         proc.cpu_runtime = proc.start_time + proc.cpu_time_remaining
         proc.next_state = P_State.FINISHED
@@ -31,6 +34,21 @@ def switch_to_run(proc):
     return proc
 
 
+def run_simulation(proc_list, scheduler):
+    global running_proc, time_slice
+    scheduler.fetch_process()
+
+
+if __name__ == '__main__':
+    proc_list = process_list_gen(random_runtimes_gen())
+    scheduler = FCFS(proc_list)
+    run_simulation(proc_list, scheduler)
+
+
+
+
+
+"""
 def run_simulation(proc_list, scheduler):
     global running_proc, time_slice
     process_ct = len(proc_list)
@@ -68,7 +86,7 @@ def run_simulation(proc_list, scheduler):
         scheduler.put_process(proc_to_add)
      
 
-""" 
+
  current_running_process.cpu_waiting_time += current_time - current_running_process.entry_time
         current_running_process.entry_time = current_time
         new_event = Event(current_time, current_running_process, State.READY, Transition.RUN)
