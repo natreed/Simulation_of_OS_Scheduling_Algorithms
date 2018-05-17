@@ -62,8 +62,11 @@ def run_simulation(proc_list, scheduler):
 
         if running_proc == None:
             continue
-
-        running_proc.
+        
+        proc_to_add = running_proc
+        proc_to_add.p_state, proc_to_add.next_state = P_State.READY, P_State.RUNNING
+        scheduler.put_process(proc_to_add)
+     
 
 """ 
  current_running_process.cpu_waiting_time += current_time - current_running_process.entry_time
