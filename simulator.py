@@ -24,11 +24,12 @@ def switch_to_run(proc):
     if (proc.cpu_time_remaining - TIMESLICE) <= 0:
         proc.total_runtime = proc.total_runtime + proc.cpu_time_remaining
         proc.finish_time = SIMTIME + proc.cpu_time_remaining
-        SIMTIME += proc.cpu_time_remaining
+        SIMTIME += proc.cpu_time_remaining + 1
         proc.cpu_time_remaining = 0
         proc.p_state = P_State.ZOMBIE
         proc.next_state = P_State.FINISHED
     else:
+        SIMTIME += 10
         proc.next_state = P_State.READY
         proc.total_runtime += TIMESLICE
         proc.p_state = P_State.RUNNING
@@ -43,14 +44,8 @@ def run_simulation(proc_list, scheduler):
     while(scheduler.peek_next_itime() >= 0):
         if SIMTIME < scheduler.peek_next_itime():
             SIMTIME = scheduler.peek_next_itime()
-        else:
-            SIMTIME += 10
 
         proc = scheduler.fetch_process()
-
-        #if data structure is empty, exit
-        if proc == None:
-            break
 
         switch_to_run(proc)
 
