@@ -1,96 +1,74 @@
 from Process import P_State,  Process
 from FCFS import FCFS
-from Utilities import random_runtimes_gen, process_list_gen
+from Utilities import build_procs_data, process_list_gen
 from time import time
+import copy
 
 #TODO: implement blocking
 
-
-
 TIMESLICE = 10
+SIMTIME = 0
 
 def switch_to_ready(proc):
-    global time_slice, running_proc
-    if proc.p_state == P_State.RUNNING:
-        proc.cpu_time_remaining -= time_slice
-        running_proc = None
-
-    next_state = P_State.READY
+    global TIMESLICE
+    proc.cpu_time_remaining -= TIMESLICE
+    proc.p_state = P_State.READY
+    proc.next_state = P_State.RUNNING
 
 def switch_to_run(proc):
-    global running_proc, time_slice
-    running_proc = proc
-    if proc.p_state == P_State.CREATED:
-        proc.start_time = time()
-    if (proc.cpu_time_remaining - time_slice) <= 0:
-        proc.cpu_runtime = proc.start_time + proc.cpu_time_remaining
-        proc.next_state = P_State.FINISHED
+    global TIMESLICE
 
+
+    if proc.p_state == P_State.CREATED:
+        proc.start_time = SIMTIME
+    if (proc.cpu_time_remaining - TIMESLICE) <= 0:
+        proc.total_runtime = proc.total_runtime + proc.cpu_time_remaining
+        proc.finish_time = SIMTIME + proc.cpu_time_remaining
+        proc.cpu_time_remaining = 0
+        proc.p_state = P_State.ZOMBIE
+        proc.next_state = P_State.FINISHED
     else:
         proc.next_state = P_State.READY
+        proc.total_runtime += TIMESLICE
+        proc.p_state = P_State.RUNNING
 
-    return proc
 
-
+# TODO: Latency for put and fetch operations not accounted for
+# what to do for O(1) vs O(logn) data structures?
 def run_simulation(proc_list, scheduler):
-    global time_slice
+    global TIMESLICE, SIMTIME
     finished_list = []
-    running_proc = None
-    scheduler.fetch_process()
 
+    while(scheduler.peek_next_itime() >= 0):
+        if SIMTIME < scheduler.peek_next_itime():
+            SIMTIME = scheduler.peek_next_itime()
+        else:
+            SIMTIME += 10
+
+        proc = scheduler.fetch_process()
+
+        #if data structure is empty, exit
+        if proc == None:
+            break
+
+        switch_to_run(proc)
+
+        if proc.next_state == P_State.READY:
+            switch_to_ready(proc)
+            scheduler.put_process(proc)
+        elif proc.next_state == P_State.FINISHED:
+            proc.p_state = P_State.FINISHED
+            finished_list.append(proc)
+
+
+
+
+    return finished_list
 
 if __name__ == '__main__':
-    proc_list = process_list_gen(random_runtimes_gen())
-    scheduler = FCFS(proc_list)
-    run_simulation(proc_list, scheduler)
+    procs_data = build_procs_data()
+    proc_list = process_list_gen(procs_data)
+    scheduler = FCFS(copy.deepcopy(proc_list))
+    proc_stats = run_simulation(proc_list, scheduler)
+    pstats = proc_stats
 
-
-
-
-
-"""
-def run_simulation(proc_list, scheduler):
-    global running_proc, time_slice
-    process_ct = len(proc_list)
-    while len(proc_list > 0):
-        next_proc = proc_list.pop(0)
-        scheduler.empty = True
-
-        if next_proc.next_state == P_State.READY:
-            p = switch_to_ready(next_proc)
-            p.p_state = P_State.READY
-            scheduler.put_process(p)
-            scheduler.empty = False
-        elif next_proc.next_state == P_State.RUNNING:
-            p = switch_to_run(next_proc)
-            p.p_state = P_State.RUNNING
-            scheduler.put_process(p)
-            scheduler.empty = False
-        elif next_proc.next_state == P_State.FINISHED:
-            p = next_proc
-            p.turnaround_time = p.finish_time - p.instantiation_time
-            p.p_state = P_State.FINISHED
-            scheduler.empty = False
-            running_proc = None
-
-        if running_proc != None or scheduler.empty == True:
-            continue
-
-        running_proc = scheduler.fetch_process()
-
-        if running_proc == None:
-            continue
-        
-        proc_to_add = running_proc
-        proc_to_add.p_state, proc_to_add.next_state = P_State.READY, P_State.RUNNING
-        scheduler.put_process(proc_to_add)
-     
-
-
- current_running_process.cpu_waiting_time += current_time - current_running_process.entry_time
-        current_running_process.entry_time = current_time
-        new_event = Event(current_time, current_running_process, State.READY, Transition.RUN)
-        event_manager.put_event(new_event)
-        current_running_process = None
-    return total_io_time
-"""
