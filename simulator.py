@@ -16,7 +16,7 @@ def switch_to_ready(proc):
     proc.next_state = P_State.RUNNING
 
 def switch_to_run(proc):
-    global TIMESLICE
+    global TIMESLICE, SIMTIME
 
 
     if proc.p_state == P_State.CREATED:
@@ -24,6 +24,7 @@ def switch_to_run(proc):
     if (proc.cpu_time_remaining - TIMESLICE) <= 0:
         proc.total_runtime = proc.total_runtime + proc.cpu_time_remaining
         proc.finish_time = SIMTIME + proc.cpu_time_remaining
+        SIMTIME += proc.cpu_time_remaining
         proc.cpu_time_remaining = 0
         proc.p_state = P_State.ZOMBIE
         proc.next_state = P_State.FINISHED
@@ -59,9 +60,6 @@ def run_simulation(proc_list, scheduler):
         elif proc.next_state == P_State.FINISHED:
             proc.p_state = P_State.FINISHED
             finished_list.append(proc)
-
-
-
 
     return finished_list
 
