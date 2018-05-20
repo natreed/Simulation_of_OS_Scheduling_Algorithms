@@ -2,7 +2,6 @@ from bintrees import rbtree
 from Utilities import build_procs_data, process_list_gen
 from Sched_baseclass import Sched_base
 from Process import P_State, Process
-from math import ceil
 
 CFS_TIMESLICE = 10
 
@@ -12,6 +11,9 @@ class CFS(Sched_base):
         self.full_timeslice = _full_timeslice
         self.empty = False
 
+    # TODO: In this algorithm, the number of process in the runque must be
+    # accurate for correct insertion and setting the timeslice value.
+    # In other words two lists are necessary.
 
     def put_process(self, new_proc):
         if len(self.ready_list) == 0:
@@ -21,8 +23,11 @@ class CFS(Sched_base):
         # we should adjust the full time slice higher. Not sure by how much though.
         # For now use ceiling b/c we can't split tics. Possibility of lots of processes with
         # time slice of 1.
-        nptsl = ceil(CFS_TIMESLICE / len(self.ready_list))
-
+        nptsl = 1
+        if not len(self.ready_list) < 0:
+            nptsl = self.full_timeslice / (len(self.ready_list))
+            if nptsl < 1:
+                nptsl = 1
         new_proc.time_slice = nptsl
 
         for i, process in enumerate(self.ready_list):
