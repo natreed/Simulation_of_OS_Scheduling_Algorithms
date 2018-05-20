@@ -1,6 +1,8 @@
 import enum
 import time
 
+
+
 #States that a
 class P_State(enum.Enum):
     CREATED = 0
@@ -17,6 +19,7 @@ class P_State(enum.Enum):
 class Process(object):
     def __init__(self, _required_cpu_time, _instantiation_time, _pid):
         self.pid = _pid
+        self.time_slice = 0
         self.p_state = P_State.CREATED
         self.next_state = P_State.RUNNING
         self.required_cpu_time = _required_cpu_time
