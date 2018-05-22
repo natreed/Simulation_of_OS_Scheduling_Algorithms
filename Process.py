@@ -24,7 +24,13 @@ class Process(object):
         self.next_state = P_State.RUNNING
         self.required_cpu_time = _required_cpu_time
         self.cpu_time_remaining = _required_cpu_time
+        #time process is scheduled first
         self.start_time = 0
+        #updated every time process is fetched
+        self.cpu_arrival = 0
+        self.cpu_exit = 0
+        #time between exit and arrival
+        self.cpu_wait = 0
         self.instantiation_time = _instantiation_time
         self.finish_time = 0
         self.total_runtime = 0

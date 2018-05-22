@@ -5,18 +5,14 @@ class FCFS(Sched_base):
         super().__init__(proc_list)
         #just a more descriptive alias in this case
         #TODO: for more complex structures it will be necessary to convert the proclist
-        self.ready_list = proc_list
         self.time_slice = _timeslice
-        self.set_timeslices()
-        self.completed = False
-
-    def set_timeslices(self):
-        for p in self.ready_list:
-            p.time_slice = self.time_slice
+        self.empty = True
 
     def put_process(self, new_proc):
+        new_proc.time_slice = self.time_slice
         if len(self.ready_list) == 0:
             self.ready_list.append(new_proc)
+            self.empty = False
             return
 
         for i, process in enumerate(self.ready_list):
@@ -27,14 +23,9 @@ class FCFS(Sched_base):
         self.ready_list.append(new_proc)
         return
 
-    def peek_next_itime(self):
-        if len(self.ready_list) > 0:
-            return self.ready_list[0].instantiation_time
-        else:
-            return -1
-
     def fetch_process(self):
         if len(self.ready_list) == 0:
+            self.empty = True
             return None
         else:
             return self.ready_list.pop(0)
