@@ -25,9 +25,8 @@ class CFS(Sched_base):
         # we should adjust the full time slice higher. Not sure by how much though.
         # For now use ceiling b/c we can't split tics. Possibility of lots of processes with
         # time slice of 1.
-        nptsl = 1   #nptsl (new process time slice)
-        if not len(self.ready_list) < 0:
-            nptsl = ceil(self.time_slice / ((len(self.ready_list) + 1)))
+
+        nptsl = ceil(self.time_slice / (len(self.ready_list) + 1))
         new_proc.time_slice = nptsl
 
         for i, process in enumerate(self.ready_list):
@@ -38,10 +37,11 @@ class CFS(Sched_base):
         return
 
     def fetch_process(self):
-        if len(self.ready_list) == 0:
+        length = len(self.ready_list)
+        if length == 1:
             self.empty = True
+        elif length == 0:
             return None
-        else:
-            return self.ready_list.pop(0)
+        return self.ready_list.pop(0)
 
 
