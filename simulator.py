@@ -33,9 +33,10 @@ def switch_to_run(proc):
         proc.total_runtime += proc.time_slice
         proc.p_state = P_State.RUNNING
 
-def peek_next_itime(ready_list):
-    if len(ready_list) > 0:
-        return ready_list[0].instantiation_time
+
+def peek_next_itime(proc_list):
+    if len(proc_list) > 0:
+        return proc_list[0].instantiation_time
     else:
         return -1
 
@@ -43,16 +44,35 @@ def peek_next_itime(ready_list):
 # what to do for O(1) vs O(logn) data structures?
 def run_simulation(proc_list, scheduler):
     global SIMTIME
+    SIMTIME = 0
     finished_list = []
 
     # TODO: The scheduler data structure and the run list need to be
     # kept separate
-    while(scheduler.peek_next_itime() >= 0):
-        if SIMTIME < scheduler.peek_next_itime():
-            SIMTIME = scheduler.peek_next_itime()
+    while True:
+        proc = None
+        if scheduler.empty:
+            # case empty scheduler and non_empty proc_list
+            if len(proc_list) != 0:
+                new_proc = proc_list.pop(0)
+                if new_proc.instantiation_time > SIMTIME:
+                    SIMTIME = new_proc.instantiation_time
+                scheduler.put_process(new_proc)
 
+            else:
+                #case: empty scheduler and empty proc_list
+                break         
+        else:
+            # case non_empty proc_list, and non-empty scheduler
+            if len(proc_list) > 0:
+                if peek_next_itime(proc_list) <= SIMTIME:
+                    new_proc = proc_list.pop(0)
+                    scheduler.put_process(new_proc)
 
         proc = scheduler.fetch_process()
+
+        if scheduler.empty:
+            break
 
         switch_to_run(proc)
 
