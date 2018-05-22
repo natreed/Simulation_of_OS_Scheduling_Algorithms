@@ -28,7 +28,7 @@ def switch_to_run(proc):
         proc.p_state = P_State.ZOMBIE
         proc.next_state = P_State.FINISHED
     else:
-        SIMTIME += 10
+        SIMTIME += proc.time_slice
         proc.next_state = P_State.READY
         proc.total_runtime += proc.time_slice
         proc.p_state = P_State.RUNNING
@@ -65,14 +65,14 @@ def run_simulation(proc_list, scheduler):
         else:
             # case non_empty proc_list, and non-empty scheduler
             if len(proc_list) > 0:
+                loc = SIMTIME
                 if peek_next_itime(proc_list) <= SIMTIME:
                     new_proc = proc_list.pop(0)
                     scheduler.put_process(new_proc)
 
         proc = scheduler.fetch_process()
 
-        #After fetching, if there is nothing in the scheduler and nothing in the proclist, break.
-        if scheduler.empty:
+        if proc == None:
             break
 
         switch_to_run(proc)
