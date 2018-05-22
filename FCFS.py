@@ -1,12 +1,8 @@
 from Sched_baseclass import Sched_base
 
 class FCFS(Sched_base):
-    def __init__(self, proc_list, _timeslice):
-        super().__init__(proc_list)
-        #just a more descriptive alias in this case
-        #TODO: for more complex structures it will be necessary to convert the proclist
-        self.time_slice = _timeslice
-        self.empty = True
+    def __init__(self, _time_slice):
+        super().__init__(_time_slice)
 
     def put_process(self, new_proc):
         new_proc.time_slice = self.time_slice

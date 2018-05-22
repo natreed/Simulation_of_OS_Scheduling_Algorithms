@@ -71,6 +71,7 @@ def run_simulation(proc_list, scheduler):
 
         proc = scheduler.fetch_process()
 
+        #After fetching, if there is nothing in the scheduler and nothing in the proclist, break.
         if scheduler.empty:
             break
 
@@ -88,9 +89,9 @@ def run_simulation(proc_list, scheduler):
 if __name__ == '__main__':
     procs_data = build_procs_data()
     proc_list = process_list_gen(procs_data)
-    scheduler = FCFS(copy.deepcopy(proc_list), TIMESLICE)
-    proc_stats = run_simulation(proc_list, scheduler)
-    scheduler = CFS(copy.deepcopy(proc_list), TIMESLICE)
-    proc_stats = run_simulation(proc_list, scheduler)
+    scheduler = FCFS(TIMESLICE)
+    proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
+    scheduler = CFS(TIMESLICE)
+    proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
     pstats = proc_stats
 
