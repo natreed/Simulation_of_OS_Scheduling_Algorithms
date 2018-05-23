@@ -1,7 +1,4 @@
-from bintrees import rbtree
-from Utilities import build_procs_data, process_list_gen
 from Sched_baseclass import Sched_base
-from Process import P_State, Process
 from math import ceil
 
 CFS_TIMESLICE = 10
@@ -9,12 +6,10 @@ CFS_TIMESLICE = 10
 class CFS(Sched_base):
     def __init__(self, _time_slice):
         super().__init__(_time_slice)
+        self.name = "CFS"
 
-
-    # TODO: In this algorithm, the number of process in the runque must be
-    # accurate for correct insertion and setting the timeslice value.
-    # In other words two lists are necessary.
-
+    # TODO: Latency for put and fetch operations not accounted for
+    # what to do for O(1) vs O(logn) data structures?
     def put_process(self, new_proc):
         if len(self.ready_list) == 0:
             new_proc.time_slice = self.time_slice

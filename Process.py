@@ -1,6 +1,4 @@
 import enum
-import time
-
 
 
 #States that a
@@ -27,8 +25,13 @@ class Process(object):
         #time process is scheduled first
         self.start_time = 0
         #updated every time process is fetched
-        self.cpu_arrival = 0
-        self.cpu_exit = 0
+        self.cpu_arrival = []
+        # Queue length and fetch count will be aggregated across all processes
+        # in the simulation and used to calculate avg queue length.
+        # queue lengths when process is scheduled.
+        self.queue_lens = []
+        #number of times scheduled
+        self.fetch_count = 0
         #time between exit and arrival
         self.cpu_wait = 0
         self.instantiation_time = _instantiation_time

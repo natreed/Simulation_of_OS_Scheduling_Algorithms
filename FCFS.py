@@ -3,6 +3,7 @@ from Sched_baseclass import Sched_base
 class FCFS(Sched_base):
     def __init__(self, _time_slice):
         super().__init__(_time_slice)
+        self.name = "FCFS"
 
     def put_process(self, new_proc):
         new_proc.time_slice = self.time_slice

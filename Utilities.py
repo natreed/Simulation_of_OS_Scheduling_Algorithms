@@ -1,4 +1,4 @@
-from Process import P_State, Process
+from Process import Process
 import random
 
 class build_procs_data(object):
