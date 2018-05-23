@@ -1,9 +1,6 @@
-from abc import abstractmethod
-
-
 class Sched_base(object):
     def __init__(self, _time_slice):
-        self.ds = None
+        self.name = ""
         self.time_slice = _time_slice
         self.ready_list = []
         self.empty = True
@@ -15,3 +12,6 @@ class Sched_base(object):
     @classmethod
     def fetch_process(self):
         raise NotImplementedError
+
+    def queue_len(self):
+        return len(self.ready_list)

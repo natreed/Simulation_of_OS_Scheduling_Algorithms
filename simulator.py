@@ -1,8 +1,8 @@
-from Process import P_State,  Process
+from Process import P_State
 from FCFS import FCFS
 from CFS import CFS
 from Utilities import build_procs_data, process_list_gen
-from time import time
+from Results_Analysis import Simsched_Analysis, Sim_stats
 import copy
 
 #TODO: implement blocking
@@ -10,6 +10,7 @@ import copy
 SIMTIME = 0
 TIMESLICE = 10
 def switch_to_ready(proc):
+    proc.cpu_arrival.append(SIMTIME)
     proc.cpu_time_remaining -= proc.time_slice
     proc.p_state = P_State.READY
     proc.next_state = P_State.RUNNING
@@ -17,11 +18,12 @@ def switch_to_ready(proc):
 def switch_to_run(proc):
     global SIMTIME
 
-
     if proc.p_state == P_State.CREATED:
         proc.start_time = SIMTIME
+
     if (proc.cpu_time_remaining - proc.time_slice) <= 0:
         proc.total_runtime = proc.total_runtime + proc.cpu_time_remaining
+        proc.cpu_arrival.append(SIMTIME)
         proc.finish_time = SIMTIME + proc.cpu_time_remaining
         SIMTIME += proc.cpu_time_remaining + 1
         proc.cpu_time_remaining = 0
@@ -40,15 +42,13 @@ def peek_next_itime(proc_list):
     else:
         return -1
 
-# TODO: Latency for put and fetch operations not accounted for
-# what to do for O(1) vs O(logn) data structures?
+
+
 def run_simulation(proc_list, scheduler):
     global SIMTIME
     SIMTIME = 0
     finished_list = []
 
-    # TODO: The scheduler data structure and the run list need to be
-    # kept separate
     while True:
         proc = None
         if scheduler.empty:
@@ -75,6 +75,9 @@ def run_simulation(proc_list, scheduler):
         if proc == None:
             break
 
+        proc.fetch_count += 1
+
+        proc.queue_lens.append(scheduler.queue_len())
         switch_to_run(proc)
 
         if proc.next_state == P_State.READY:
@@ -89,9 +92,13 @@ def run_simulation(proc_list, scheduler):
 if __name__ == '__main__':
     procs_data = build_procs_data()
     proc_list = process_list_gen(procs_data)
-    scheduler = FCFS(TIMESLICE)
-    proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
-    scheduler = CFS(TIMESLICE)
-    proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
-    pstats = proc_stats
+    sim_stats = []
+    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE)]
+
+    for scheduler in schedulers:
+        proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
+        analyzer = Simsched_Analysis(proc_stats, scheduler.name)
+        sim_stats.append(analyzer.get_sim_stats())
+    print("Hello")
+
 
