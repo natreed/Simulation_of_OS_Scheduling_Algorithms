@@ -89,16 +89,28 @@ def run_simulation(proc_list, scheduler):
 
     return finished_list
 
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     procs_data = build_procs_data()
     proc_list = process_list_gen(procs_data)
     sim_stats = []
     schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE)]
+    CSV_encoded_simstats = ""
 
     for scheduler in schedulers:
         proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
         analyzer = Simsched_Analysis(proc_stats, scheduler.name)
         sim_stats.append(analyzer.get_sim_stats())
+
+    analyzer.create_results_file(sim_stats)
+       
     print("Hello")
 
 

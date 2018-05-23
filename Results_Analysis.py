@@ -1,4 +1,4 @@
-from Process import Process
+import csv
 
 class Simsched_Analysis(object):
     def __init__(self, _p_list, _sched_name):
@@ -43,6 +43,7 @@ class Simsched_Analysis(object):
         return sum_lengths/sum_fetch_counts
 
 
+
     # contains the results
     def get_sim_stats(self):
         self.sim_stats.sched_name = self.sched_name
@@ -50,9 +51,17 @@ class Simsched_Analysis(object):
         self.sim_stats.turnaround_times = self.turnaround_times()
         self.sim_stats.avg_queue_len = self.get_avg_queue_len()
         sim_stats = self.sim_stats
+
         # TODO: add more stats
         return sim_stats
 
+    @staticmethod
+    def create_results_file(sim_stats):
+        with open('sim_stats.csv', 'w') as csvfile:
+            stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for st in sim_stats:
+                stat_writer.writerow([st.sched_name] + ["total wait times"] + st.qwts)
+                stat_writer.writerow([st.sched_name] + ["turnaround times"] + st.turnaround_times)
 
 
 class Sim_stats(object):
