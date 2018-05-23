@@ -1,0 +1,4 @@
+FCFS,total wait times,0,60,50,50,50,30
+FCFS,turnaround times,19,79,63,70,64,43
+CFS,total wait times,50,212,292,293,311,326
+CFS,turnaround times,69,215,298,298,316,333
