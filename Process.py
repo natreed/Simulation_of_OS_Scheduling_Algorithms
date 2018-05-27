@@ -37,3 +37,4 @@ class Process(object):
         self.instantiation_time = _instantiation_time
         self.finish_time = 0
         self.total_runtime = 0
+

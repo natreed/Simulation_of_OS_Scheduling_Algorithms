@@ -13,7 +13,8 @@ class FCFS(Sched_base):
             return
 
         for i, process in enumerate(self.ready_list):
-            if process.instantiation_time > new_proc.instantiation_time:
+
+            if process.pid > new_proc.pid:
                 self.ready_list.insert(i, new_proc)
                 return
 

@@ -14,4 +14,4 @@ class Sched_base(object):
         raise NotImplementedError
 
     def queue_len(self):
-        return len(self.ready_list)
+        return len(self.ready_list) + 1
