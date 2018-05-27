@@ -2,6 +2,7 @@ from Process import P_State
 from FCFS import FCFS
 from CFS import CFS
 from plist_generator import build_procs_data, plist_gen, plist_rt_spec
+from MLFQ import MLFQ
 from Results_Analysis import Simsched_Analysis, Sim_stats
 import copy
 
@@ -12,6 +13,7 @@ TIMESLICE = 10
 def switch_to_ready(proc):
     proc.cpu_arrival.append(SIMTIME)
     proc.cpu_time_remaining -= proc.time_slice
+    proc.p_budget -= proc.time_slice
     proc.p_state = P_State.READY
     proc.next_state = P_State.RUNNING
 
@@ -94,7 +96,7 @@ if __name__ == '__main__':
     RAND = plist_gen(build_procs_data(plist_rt_spec.RAND))
     SHORT = plist_gen(build_procs_data(plist_rt_spec.SHORT))
     sim_stats = []
-    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE)]
+    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE)]
     CSV_encoded_simstats = ""
 
     for config in plist_rt_spec:

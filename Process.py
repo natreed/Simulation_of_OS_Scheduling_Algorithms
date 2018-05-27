@@ -1,5 +1,6 @@
 import enum
 
+DEFAULT_BUDGET = 20
 
 #States that a
 class P_State(enum.Enum):
@@ -9,6 +10,12 @@ class P_State(enum.Enum):
     BLOCKED = 3
     ZOMBIE = 4
     FINISHED = 5
+
+class P_Priority(enum.Enum):
+    ZERO = 0
+    ONE = 1
+    TWO = 2
+    THREE = 3
 
 #TODO: Could include a blocking timeout. To keep it simple
 #starting with only required cpu time.
@@ -37,4 +44,5 @@ class Process(object):
         self.instantiation_time = _instantiation_time
         self.finish_time = 0
         self.total_runtime = 0
-
+        self.p_priority = P_Priority.ZERO
+        self.p_budget = DEFAULT_BUDGET
