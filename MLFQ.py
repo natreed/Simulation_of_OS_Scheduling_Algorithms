@@ -12,7 +12,7 @@ class MLFQ(Sched_base):
         for i in range (0, len(P_Priority)):
             self.ready_list.insert(0, [])
         self.time_to_promote = TTP
-        self.num_queues = self.queue_len()
+        self.num_queues = len(P_Priority)
 
     def put_process(self, new_proc):
         new_proc.time_slice = self.time_slice
