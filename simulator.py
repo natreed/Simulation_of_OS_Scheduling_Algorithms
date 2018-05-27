@@ -1,7 +1,7 @@
 from Process import P_State
 from FCFS import FCFS
 from CFS import CFS
-from Utilities import build_procs_data, process_list_gen
+from plist_generator import build_procs_data, plist_gen, plist_rt_spec
 from Results_Analysis import Simsched_Analysis, Sim_stats
 import copy
 
@@ -30,7 +30,7 @@ def switch_to_run(proc):
         proc.p_state = P_State.ZOMBIE
         proc.next_state = P_State.FINISHED
     else:
-        SIMTIME += proc.time_slice
+        SIMTIME += proc.time_slice + 1
         proc.next_state = P_State.READY
         proc.total_runtime += proc.time_slice
         proc.p_state = P_State.RUNNING
@@ -90,24 +90,19 @@ def run_simulation(proc_list, scheduler):
     return finished_list
 
 
-
-
-
-
-
-
-
 if __name__ == '__main__':
-    procs_data = build_procs_data()
-    proc_list = process_list_gen(procs_data)
+    RAND = plist_gen(build_procs_data(plist_rt_spec.RAND))
+    SHORT = plist_gen(build_procs_data(plist_rt_spec.SHORT))
     sim_stats = []
     schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE)]
     CSV_encoded_simstats = ""
 
-    for scheduler in schedulers:
-        proc_stats = run_simulation(copy.deepcopy(proc_list), scheduler)
-        analyzer = Simsched_Analysis(proc_stats, scheduler.name)
-        sim_stats.append(analyzer.get_sim_stats())
+    for config in plist_rt_spec:
+        plist = plist_gen(build_procs_data(config))
+        for scheduler in schedulers:
+            proc_stats = run_simulation(copy.deepcopy(plist), scheduler)
+            analyzer = Simsched_Analysis(proc_stats, scheduler.name, config)
+            sim_stats.append(analyzer.get_sim_stats())
 
     analyzer.create_results_file(sim_stats)
        

@@ -16,10 +16,6 @@ class CFS(Sched_base):
             self.ready_list.append(new_proc)
             self.empty = False
             return
-        # TODO: The algorithm says something to the effect that if p_tslice drops below 1
-        # we should adjust the full time slice higher. Not sure by how much though.
-        # For now use ceiling b/c we can't split tics. Possibility of lots of processes with
-        # time slice of 1.
 
         nptsl = ceil(self.time_slice / (len(self.ready_list) + 1))
         new_proc.time_slice = nptsl
