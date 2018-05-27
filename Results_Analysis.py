@@ -2,6 +2,8 @@ import csv
 from Process import Process
 from operator import attrgetter
 
+
+
 class Simsched_Analysis(object):
     def __init__(self, _p_list, _sched_name, config):
         self.plist_config = config.name
@@ -97,17 +99,16 @@ class Simsched_Analysis(object):
 
     @staticmethod
     def create_results_file(sim_stats):
-        with open('sim_stats.csv', 'w') as csvfile:
+        st = sim_stats
+        with open(sim_stats.plist_config + '_' + sim_stats.sched_name + '_stats.csv', 'w') as csvfile:
             stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            for st in sim_stats:
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["instantiation times"] + st.instantiation_times)
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["start_times"] + st.start_times)
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["finish times"] + st.finish_times)
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["total wait times"] + st.qwts)
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["turnaround times"] + st.turnaround_times)
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["average queue lengths"] + st.avg_proc_qlens)
-                stat_writer.writerow([st.plist_config, st.sched_name] + ["response times"] + st.response_times)
-                #stat_writer.writerow([''])
+            stat_writer.writerow(["instantiation times"] + st.instantiation_times)
+            stat_writer.writerow(["start times"] + st.start_times)
+            stat_writer.writerow(["finish times"] + st.finish_times)
+            stat_writer.writerow(["total wait times"] + st.qwts)
+            stat_writer.writerow(["turnaround times"] + st.turnaround_times)
+            stat_writer.writerow(["average queue lengths"] + st.avg_proc_qlens)
+            stat_writer.writerow(["response times"] + st.response_times)
 
 
 class Sim_stats(object):
