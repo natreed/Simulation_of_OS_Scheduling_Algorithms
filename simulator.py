@@ -91,10 +91,7 @@ def run_simulation(proc_list, scheduler):
 
 
 if __name__ == '__main__':
-    RAND = plist_gen(build_procs_data(plist_rt_spec.RAND))
-    SHORT = plist_gen(build_procs_data(plist_rt_spec.SHORT))
     schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE)]
-    CSV_encoded_simstats = ""
 
     for config in plist_rt_spec:
         plist = plist_gen(build_procs_data(config))
