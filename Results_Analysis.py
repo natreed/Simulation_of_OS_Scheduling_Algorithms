@@ -109,6 +109,21 @@ class Simsched_Analysis(object):
             stat_writer.writerow(["turnaround times"] + st.turnaround_times)
             stat_writer.writerow(["average queue lengths"] + st.avg_proc_qlens)
             stat_writer.writerow(["response times"] + st.response_times)
+        Simsched_Analysis.transpose_csv(sim_stats.plist_config +
+                                        '_' + sim_stats.sched_name + '_stats.csv')
+
+    # borrowed code from https://askubuntu.com/questions/74686/is-there-a-utility-to-transpose-a-csv-file
+    @staticmethod
+    def transpose_csv(filename):
+        with open(filename) as f:
+            reader = csv.reader(f)
+            cols = []
+            for row in reader:
+                cols.append(row)
+        with open(filename, 'w') as f:
+            writer = csv.writer(f)
+            for i in range(len(max(cols, key=len))):
+                writer.writerow([(c[i] if i<len(c) else '') for c in cols])
 
 
 class Sim_stats(object):
