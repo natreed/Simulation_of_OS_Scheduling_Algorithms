@@ -1,6 +1,8 @@
 from Process import P_State
 from FCFS import FCFS
 from CFS import CFS
+from RoundRobin import RR
+from MLFQ import MLFQ
 from plist_generator import build_procs_data, plist_gen, plist_rt_spec
 from Results_Analysis import Simsched_Analysis, Sim_stats
 import copy
@@ -43,6 +45,8 @@ def peek_next_itime(proc_list):
         return -1
 
 
+def get_simtime():
+    return SIMTIME
 
 def run_simulation(proc_list, scheduler):
     global SIMTIME
@@ -91,7 +95,7 @@ def run_simulation(proc_list, scheduler):
 
 
 if __name__ == '__main__':
-    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE)]
+    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE, get_simtime)]
 
     for config in plist_rt_spec:
         plist = plist_gen(build_procs_data(config))

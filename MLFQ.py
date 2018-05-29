@@ -6,9 +6,10 @@ TTP = 40
 
 class MLFQ(Sched_base):
 
-    def __init__(self, _time_slice):
+    def __init__(self, _time_slice, _get_simtime):
         super().__init__(_time_slice)
         self.name = "MLFQ"
+        self.get_simtime = _get_simtime
         for i in range (0, len(P_Priority)):
             self.ready_list.insert(0, [])
         self.time_to_promote = TTP
@@ -19,7 +20,7 @@ class MLFQ(Sched_base):
         self.ready_list[0].append(new_proc)
         self.empty = False
         self.update_queues()
-        #self.promotion_check()
+        self.promotion_check()
 
     def update_queues(self):
         #start from second to last queue and work to top queue
@@ -37,7 +38,8 @@ class MLFQ(Sched_base):
     #In order for this to work, needs access to SIMTIME.
     #I couldn't get it to work without changing the signature of
     #put_process to take in SIMTIME
-    def promotion_check(self, time):
+    def promotion_check(self):
+        time = self.get_simtime()
         if time >= self.time_to_promote:
             #print("promotion time!")
             for i in range(1, self.num_queues):
