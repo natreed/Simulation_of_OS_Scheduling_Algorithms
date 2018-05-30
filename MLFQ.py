@@ -2,7 +2,7 @@ from Sched_baseclass import Sched_base
 from Process import P_Priority, DEFAULT_BUDGET
 
 
-TTP = 40
+TTP = 3000  #time to promote
 
 class MLFQ(Sched_base):
 
@@ -14,6 +14,9 @@ class MLFQ(Sched_base):
             self.ready_list.insert(0, [])
         self.time_to_promote = TTP
         self.num_queues = len(P_Priority)
+
+    def queue_len(self):
+        return sum(list(map(lambda x: len(x),self.ready_list)))  # add 1 to match base implementation?
 
     def put_process(self, new_proc):
         new_proc.time_slice = self.time_slice
@@ -35,9 +38,6 @@ class MLFQ(Sched_base):
         self.ready_list[proc.p_priority.value].append(proc)
         proc.p_budget = DEFAULT_BUDGET
 
-    #In order for this to work, needs access to SIMTIME.
-    #I couldn't get it to work without changing the signature of
-    #put_process to take in SIMTIME
     def promotion_check(self):
         time = self.get_simtime()
         if time >= self.time_to_promote:

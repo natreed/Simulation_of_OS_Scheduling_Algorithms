@@ -14,6 +14,7 @@ TIMESLICE = 10
 def switch_to_ready(proc):
     proc.cpu_arrival.append(SIMTIME)
     proc.cpu_time_remaining -= proc.time_slice
+    proc.p_budget -= proc.time_slice  #for MLFQ
     proc.p_state = P_State.READY
     proc.next_state = P_State.RUNNING
 
