@@ -96,16 +96,15 @@ def run_simulation(proc_list, scheduler):
 
 if __name__ == '__main__':
     schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE, get_simtime)]
-
+    sim_stats = []
     for config in plist_rt_spec:
         plist = plist_gen(build_procs_data(config))
         for scheduler in schedulers:
             proc_stats = run_simulation(copy.deepcopy(plist), scheduler)
             analyzer = Simsched_Analysis(proc_stats, scheduler.name, config)
-            sim_stats = analyzer.get_sim_stats()
+            sim_stats.append(analyzer.get_sim_stats())
 
-            analyzer.create_results_file(sim_stats)
-            sim_stats = []
+    analyzer.create_results_file(sim_stats)
        
     print("Hello")
 
