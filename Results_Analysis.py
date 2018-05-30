@@ -85,7 +85,7 @@ class Simsched_Analysis(object):
     # contains the results
     def get_sim_stats(self):
         sim_stats = self.sim_stats
-        sim_stats.plist_config = self.plist_config
+        sim_stats.config_name = self.plist_config
         sim_stats.sched_name = self.sched_name
         sim_stats.qwts = self.get_sim_qwts()
         sim_stats.turnaround_times = self.get_turnaround_times()
@@ -95,15 +95,29 @@ class Simsched_Analysis(object):
         sim_stats.instantiation_times = self.get_instantiation_times()
         sim_stats.start_times = self.get_start_times()
         sim_stats.finish_times = self.get_finish_times()
+        for i in range(0, len(sim_stats.start_times)):
+            sim_stats.plist_config_rpt.append(sim_stats.config_name)
+            sim_stats.sched_name_rpt.append(sim_stats.sched_name)
 
         # TODO: add more stats
         return sim_stats
 
     @staticmethod
+    def create_results_csv(sim_stats):
+        st = sim_stats
+        with open('sim_stats.csv', 'w') as csvfile:
+            stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            csv_fmt =  Simsched_Analysis.all_vals(sim_stats, csvfile)
+            for i in range(0, len(csv_fmt)):
+                stat_writer.writerow(csv_fmt[i])
+
+        Simsched_Analysis.transpose_csv('sim_stats.csv')
+
+    @staticmethod
     def create_results_file(sim_stats):
         st = sim_stats
         filename = 'CSV_Data/' + sim_stats.plist_config + '_' + sim_stats.sched_name + '_stats.csv'
-        os.makedirs(os.path.dirname(filename), exist_ok = True)
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w') as csvfile:
             stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
             stat_writer.writerow(["instantiation times"] + st.instantiation_times)
@@ -116,7 +130,46 @@ class Simsched_Analysis(object):
         Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.plist_config +
                                         '_' + sim_stats.sched_name + '_stats.csv')
 
-    # borrowed code from https://askubuntu.com/questions/74686/is-there-a-utility-to-transpose-a-csv-file
+    @staticmethod
+    def all_vals(sim_stats, csvfile):
+        csv_fmt = [[]]
+        cols =      ["plist configuration",
+                        "scheduler",
+                        "instantiation times",
+                        "start_times",
+                        "finish times",
+                        "total wait times",
+                        "turnaround times",
+                        "average queue lengths",
+                        "response times"]
+
+        for i in range(0, len(cols)):
+            csv_fmt.append([cols[i]])
+
+        for i in range(0, len(cols)):
+            if i == 0:
+                csv_fmt[i].append(cols[i])
+            for j in range(0, len(sim_stats)):
+                if i == 0:
+                    csv_fmt[i] += (sim_stats[j].plist_config_rpt)
+                elif i == 1:
+                    csv_fmt[i] += (sim_stats[j].sched_name_rpt)
+                elif i == 2:
+                    csv_fmt[i] += (sim_stats[j].instantiation_times)
+                elif i == 3:
+                    csv_fmt[i] += (sim_stats[j].start_times)
+                elif i ==4:
+                    csv_fmt[i] += (sim_stats[j].finish_times)
+                elif i == 5:
+                    csv_fmt[i] += (sim_stats[j].qwts)
+                elif i == 6:
+                    csv_fmt[i] += (sim_stats[j].turnaround_times)
+                elif i == 7:
+                    csv_fmt[i] += (sim_stats[j].avg_proc_qlens)
+                elif i == 8:
+                    csv_fmt[i] += (sim_stats[j].response_times)
+        return csv_fmt
+
     @staticmethod
     def transpose_csv(filename):
         with open(filename) as f:
@@ -127,13 +180,16 @@ class Simsched_Analysis(object):
         with open(filename, 'w') as f:
             writer = csv.writer(f)
             for i in range(len(max(cols, key=len))):
-                writer.writerow([(c[i] if i<len(c) else '') for c in cols])
+                writer.writerow([(c[i].strip() if i<len(c) else '') for c in cols])
 
 
 class Sim_stats(object):
     def __init__(self):
-        self.plist_config = ""
+        self.config_name = ""
         self.sched_name = ""
+        self.start_times = []
+        self.plist_config_rpt = []
+        self.sched_name_rpt = []
         self.qwts = []
         self.turnaround_times = []
         self.avg_queue_len = 0
