@@ -116,7 +116,7 @@ class Simsched_Analysis(object):
     @staticmethod
     def create_results_file(sim_stats):
         st = sim_stats
-        filename = 'CSV_Data/' + sim_stats.plist_config + '_' + sim_stats.sched_name + '_stats.csv'
+        filename = 'CSV_Data/' + sim_stats.config_name + '_' + sim_stats.sched_name + '_stats.csv'
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w') as csvfile:
             stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -127,7 +127,7 @@ class Simsched_Analysis(object):
             stat_writer.writerow(["turnaround times"] + st.turnaround_times)
             stat_writer.writerow(["average queue lengths"] + st.avg_proc_qlens)
             stat_writer.writerow(["response times"] + st.response_times)
-        Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.plist_config +
+        Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.config_name +
                                         '_' + sim_stats.sched_name + '_stats.csv')
 
     @staticmethod

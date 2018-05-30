@@ -103,9 +103,13 @@ if __name__ == '__main__':
         for scheduler in schedulers:
             proc_stats = run_simulation(copy.deepcopy(plist), scheduler)
             analyzer = Simsched_Analysis(proc_stats, scheduler.name, config)
-            sim_stats.append(analyzer.get_sim_stats())
+            st = analyzer.get_sim_stats()
+            sim_stats.append(st)
+            analyzer.create_results_file(st)
 
-    analyzer.create_results_file(sim_stats)
+    analyzer.create_results_csv(sim_stats)
+
+
        
     print("Hello")
 
