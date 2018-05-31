@@ -96,7 +96,7 @@ def run_simulation(proc_list, scheduler):
 
 
 if __name__ == '__main__':
-    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE, get_simtime)]
+    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE, get_simtime), RR(TIMESLICE)]
     sim_stats = []
     for config in plist_rt_spec:
         plist = plist_gen(build_procs_data(config))
