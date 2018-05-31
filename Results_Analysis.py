@@ -1,9 +1,7 @@
 import csv
 import os
-
 from Process import Process
 from operator import attrgetter
-
 
 
 class Simsched_Analysis(object):
@@ -107,7 +105,7 @@ class Simsched_Analysis(object):
         st = sim_stats
         with open('sim_stats.csv', 'w') as csvfile:
             stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
-            csv_fmt =  Simsched_Analysis.all_vals(sim_stats, csvfile)
+            csv_fmt = Simsched_Analysis.all_vals(sim_stats, csvfile)
             for i in range(0, len(csv_fmt)):
                 stat_writer.writerow(csv_fmt[i])
 
@@ -132,23 +130,18 @@ class Simsched_Analysis(object):
 
     @staticmethod
     def all_vals(sim_stats, csvfile):
-        csv_fmt = [[]]
-        cols =      ["plist configuration",
-                        "scheduler",
-                        "instantiation times",
-                        "start_times",
-                        "finish times",
-                        "total wait times",
-                        "turnaround times",
-                        "average queue lengths",
-                        "response times"]
 
-        for i in range(0, len(cols)):
-            csv_fmt.append([cols[i]])
+        csv_fmt = [["plist configuration"],
+                        ["scheduler"],
+                        ["instantiation times"],
+                        ["start_times"],
+                        ["finish times"],
+                        ["total wait times"],
+                        ["turnaround times"],
+                        ["average queue lengths"],
+                        ["response times"]]
 
-        for i in range(0, len(cols)):
-            if i == 0:
-                csv_fmt[i].append(cols[i])
+        for i in range(0, len(csv_fmt)):
             for j in range(0, len(sim_stats)):
                 if i == 0:
                     csv_fmt[i] += (sim_stats[j].plist_config_rpt)
