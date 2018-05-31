@@ -11,15 +11,6 @@ class RR(Sched_base):
         self.ready_list.append(new_proc)
         self.empty=False
 
-        for i, process in enumerate(self.ready_list):
-            if process.required_cpu_time > self.time_slice:
-                process.cpu_time_remaining= process.required_cpu_time-self.time_slice
-                process.total_runtime+=self.time_slice
-
-            elif process.required_cpu_time < self.time_slice:
-                process.cpu_time_remaining=0
-                process.finish_time+= process.required_cpu_time
-
     def fetch_process(self):
         if len(self.ready_list) == 0:
             self.empty = True
