@@ -12,14 +12,14 @@ class RR(Sched_base):
         self.empty=False
 
         for i, process in enumerate(self.ready_list):
-            if process.required_cpu_time > new_proc.time_slice:
+            if process.required_cpu_time > self.time_slice:
                 process.cpu_time_remaining= process.required_cpu_time-new_proc.time_slice
-                process.total_runtime+=new_proc.time_slice
+                process.total_runtime+=self.time_slice
                 #process.cpu_wait
                 process.p_state= P_State.RUNNING
                 process.next_state=P_State.READY
 
-            elif process.required_cpu_time < new_proc.time_slice:
+            elif process.required_cpu_time < self.time_slice:
                 process.cpu_time_remaining=0
                 process.finish_time+= process.required_cpu_time
                 process.p_state=P_State.FINISHED
@@ -33,5 +33,3 @@ class RR(Sched_base):
             return None
         else:
             return self.ready_list.pop(0)
-
-
