@@ -15,7 +15,6 @@ g = sns.factorplot(x='plist configuration',
                    palette = "muted"
                    )
 plt.show()
-print("hello")
 g = sns.factorplot(x='plist configuration',
                    y='total wait times',
                    hue='scheduler',
@@ -23,5 +22,13 @@ g = sns.factorplot(x='plist configuration',
                    size = 8,
                    kind = "bar",
                    palette = "muted"
+                   )
+
+plt.show()
+g = sns.lmplot(x='instantiation times',
+                   y='response times',
+                   data = df,
+                   hue = 'scheduler',
+                   col= 'plist configuration'
                    )
 plt.show()
