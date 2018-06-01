@@ -3,6 +3,7 @@ from FCFS import FCFS
 from CFS import CFS
 from RoundRobin import RR
 from MLFQ import MLFQ
+from SJF import SJF
 from plist_generator import build_procs_data, plist_gen, plist_rt_spec
 from Results_Analysis import Simsched_Analysis, Sim_stats
 import copy
@@ -67,7 +68,7 @@ def run_simulation(proc_list, scheduler):
 
 
 if __name__ == '__main__':
-    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE, get_simtime), RR(TIMESLICE)]
+    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE, get_simtime), RR(TIMESLICE), SJF(TIMESLICE)]
     sim_stats = []
     for config in plist_rt_spec:
         plist = plist_gen(build_procs_data(config))
