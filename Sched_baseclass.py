@@ -5,6 +5,8 @@ class Sched_base(object):
         self.name = ""
         self.time_slice = _time_slice
         self.ready_list = []
+        self.finished_list = []
+        self.SIMTIME = 0
         self.empty = True
 
     @classmethod
@@ -17,6 +19,12 @@ class Sched_base(object):
 
     def queue_len(self):
         return len(self.ready_list) + 1
+
+    def peek_next_itime(self, proc_list):
+        if len(proc_list) > 0:
+            return proc_list[0].instantiation_time
+        else:
+            return -1
 
     def switch_to_ready(self, proc, SIMTIME):
         proc.cpu_arrival.append(SIMTIME)
@@ -42,5 +50,40 @@ class Sched_base(object):
             proc.next_state = P_State.READY
             proc.total_runtime += proc.time_slice
             proc.p_state = P_State.RUNNING
-
         return SIMTIME
+
+    def run(self, proc_list):
+        while True:
+            if self.empty:
+                # case empty scheduler and non_empty proc_list
+                if len(proc_list) != 0:
+                    new_proc = proc_list.pop(0)
+                    if new_proc.instantiation_time > self.SIMTIME:
+                        self.SIMTIME = new_proc.instantiation_time
+                    self.put_process(new_proc)
+                else:
+                    # case: empty scheduler and empty proc_list
+                    break
+            else:
+                # case non_empty proc_list, and non-empty scheduler
+                while len(proc_list) > 0 and self.peek_next_itime(proc_list) <= self.SIMTIME:
+                    new_proc = proc_list.pop(0)
+                    self.put_process(new_proc)
+
+            proc = self.fetch_process()
+
+            if proc == None:
+                break
+
+            proc.fetch_count += 1
+            proc.queue_lens.append(self.queue_len())
+            self.SIMTIME = self.switch_to_run(proc, self.SIMTIME)
+
+            if proc.next_state == P_State.READY:
+                self.switch_to_ready(proc, self.SIMTIME)
+                self.put_process(proc)
+            elif proc.next_state == P_State.FINISHED:
+                proc.p_state = P_State.FINISHED
+                self.finished_list.append(proc)
+
+        return self.finished_list

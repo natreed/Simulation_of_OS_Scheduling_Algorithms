@@ -6,10 +6,9 @@ TTP = 3000  #time to promote
 
 class MLFQ(Sched_base):
 
-    def __init__(self, _time_slice, _get_simtime):
+    def __init__(self, _time_slice):
         super().__init__(_time_slice)
         self.name = "MLFQ"
-        self.get_simtime = _get_simtime
         for i in range (0, len(P_Priority)):
             self.ready_list.insert(0, [])
         self.time_to_promote = TTP
@@ -39,7 +38,7 @@ class MLFQ(Sched_base):
         proc.p_budget = DEFAULT_BUDGET
 
     def promotion_check(self):
-        time = self.get_simtime()
+        time = self.SIMTIME
         if time >= self.time_to_promote:
             #print("promotion time!")
             for i in range(1, self.num_queues):
@@ -61,6 +60,3 @@ class MLFQ(Sched_base):
                     # and will get demoted when put is called next
         self.empty = True
         return None
-
-
-

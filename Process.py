@@ -39,8 +39,6 @@ class Process(object):
         self.queue_lens = []
         #number of times scheduled
         self.fetch_count = 0
-        #time between exit and arrival
-        self.cpu_wait = 0
         self.instantiation_time = _instantiation_time
         self.finish_time = 0
         self.total_runtime = 0

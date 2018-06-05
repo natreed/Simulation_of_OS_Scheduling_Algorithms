@@ -6,6 +6,15 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
+g = sns.lmplot(x='instantiation times',
+                   y='response times',
+                   data = df,
+                   hue = 'scheduler',
+                   col= 'plist configuration'
+                   )
+plt.show()
+exit(0)
+
 g = sns.factorplot(x='plist configuration',
                    y='average queue lengths',
                    hue='scheduler',
@@ -15,6 +24,7 @@ g = sns.factorplot(x='plist configuration',
                    palette = "muted"
                    )
 plt.show()
+
 g = sns.factorplot(x='plist configuration',
                    y='total wait times',
                    hue='scheduler',
@@ -23,12 +33,5 @@ g = sns.factorplot(x='plist configuration',
                    kind = "bar",
                    palette = "muted"
                    )
-
 plt.show()
-g = sns.lmplot(x='instantiation times',
-                   y='response times',
-                   data = df,
-                   hue = 'scheduler',
-                   col= 'plist configuration'
-                   )
-plt.show()
+exit(0)
