@@ -2,7 +2,7 @@ from Sched_baseclass import Sched_base
 from Process import P_Priority, DEFAULT_BUDGET
 
 
-TTP = 3000  #time to promote
+TTP = 500  #time to promote
 
 class MLFQ(Sched_base):
 

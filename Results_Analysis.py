@@ -2,6 +2,7 @@ import csv
 import os
 from Process import Process
 from operator import attrgetter
+from math import ceil
 
 
 class Simsched_Analysis(object):
@@ -36,15 +37,15 @@ class Simsched_Analysis(object):
     def get_turnaround_times(self):
         tts = []
         for i in range(0, self.plist_len):
-            tts.append((self.plist[i].finish_time - self.plist[i].start_time) +
-                       (self.plist[i].start_time - self.plist[i].instantiation_time)
+            tts.append(self.plist[i].finish_time -
+                       self.plist[i].instantiation_time
                        )
         return tts
 
     def get_turnaround_over_sz(self):
         tos = []
         for i, x in enumerate(self.get_turnaround_times()):
-            tos.append(x/self.plist[i].required_cpu_time)
+            tos.append(ceil(x / self.plist[i].required_cpu_time))
         return tos
 
     #Average queue length for the entire simulation
@@ -106,8 +107,10 @@ class Simsched_Analysis(object):
                 sizes.append('LARGE')
             elif self.plist[i].required_cpu_time > 1000:
                 sizes.append('MEDiUM')
-            else:
+            elif self.plist[i].required_cpu_time > 50:
                 sizes.append('SMALL')
+            else:
+                sizes.append('TINY')
         return sizes
 
 
@@ -126,7 +129,7 @@ class Simsched_Analysis(object):
         sim_stats.finish_times = self.get_finish_times()
         sim_stats.required_cpu_times = self.get_cpu_runtimes()
         sim_stats.pids = self.get_pids()
-        sim_stats.turnaround_div_rt = self.get_turnaround_times()
+        sim_stats.turnaround_div_rt = self.get_turnaround_over_sz()
         sim_stats.proc_sizes = self.get_proc_sizes()
         for i in range(0, len(sim_stats.start_times)):
             sim_stats.plist_config_rpt.append(sim_stats.config_name)
