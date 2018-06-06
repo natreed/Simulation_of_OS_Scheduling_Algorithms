@@ -9,13 +9,14 @@ from Results_Analysis import Simsched_Analysis, Sim_stats
 import copy
 
 
-TIMESLICE = 10
+TIMESLICE = 20
 
 if __name__ == '__main__':
-    schedulers = [FCFS(TIMESLICE), CFS(TIMESLICE), MLFQ(TIMESLICE), RR(TIMESLICE), SJF(TIMESLICE)]
+    schedulers = [CFS(TIMESLICE), MLFQ(TIMESLICE), RR(TIMESLICE)]
     sim_stats = []
     for config in plist_rt_spec:
-        plist = plist_gen(build_procs_data(config))
+        bpd = build_procs_data(config)
+        plist = plist_gen(bpd)
         for scheduler in schedulers:
             proc_stats = scheduler.run(copy.deepcopy(plist))
             analyzer = Simsched_Analysis(proc_stats, scheduler.name, config)

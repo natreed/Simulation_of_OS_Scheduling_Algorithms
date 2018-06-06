@@ -36,8 +36,16 @@ class Simsched_Analysis(object):
     def get_turnaround_times(self):
         tts = []
         for i in range(0, self.plist_len):
-            tts.append(self.plist[i].finish_time - self.plist[i].start_time)
+            tts.append((self.plist[i].finish_time - self.plist[i].start_time) +
+                       (self.plist[i].start_time - self.plist[i].instantiation_time)
+                       )
         return tts
+
+    def get_turnaround_over_sz(self):
+        tos = []
+        for i, x in enumerate(self.get_turnaround_times()):
+            tos.append(x/self.plist[i].required_cpu_time)
+        return tos
 
     #Average queue length for the entire simulation
     def get_avg_sim_queue_len(self):
@@ -79,6 +87,29 @@ class Simsched_Analysis(object):
             ftimes.append(self.plist[i].finish_time)
         return ftimes
 
+    def get_cpu_runtimes(self):
+        rts = []
+        for i in range(0, self.plist_len):
+            rts.append(self.plist[i].required_cpu_time)
+        return rts
+
+    def get_pids(self):
+        pids = []
+        for i in range(0, self.plist_len):
+            pids.append(self.plist[i].pid)
+        return pids
+
+    def get_proc_sizes(self):
+        sizes = []
+        for i in range(0, self.plist_len):
+            if self.plist[i].required_cpu_time > 4000:
+                sizes.append('LARGE')
+            elif self.plist[i].required_cpu_time > 1000:
+                sizes.append('MEDiUM')
+            else:
+                sizes.append('SMALL')
+        return sizes
+
 
     # contains the results
     def get_sim_stats(self):
@@ -93,6 +124,10 @@ class Simsched_Analysis(object):
         sim_stats.instantiation_times = self.get_instantiation_times()
         sim_stats.start_times = self.get_start_times()
         sim_stats.finish_times = self.get_finish_times()
+        sim_stats.required_cpu_times = self.get_cpu_runtimes()
+        sim_stats.pids = self.get_pids()
+        sim_stats.turnaround_div_rt = self.get_turnaround_times()
+        sim_stats.proc_sizes = self.get_proc_sizes()
         for i in range(0, len(sim_stats.start_times)):
             sim_stats.plist_config_rpt.append(sim_stats.config_name)
             sim_stats.sched_name_rpt.append(sim_stats.sched_name)
@@ -118,6 +153,7 @@ class Simsched_Analysis(object):
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w') as csvfile:
             stat_writer = csv.writer(csvfile, quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            stat_writer.writerow(["pids"] + st.pids)
             stat_writer.writerow(["instantiation times"] + st.instantiation_times)
             stat_writer.writerow(["start times"] + st.start_times)
             stat_writer.writerow(["finish times"] + st.finish_times)
@@ -125,6 +161,9 @@ class Simsched_Analysis(object):
             stat_writer.writerow(["turnaround times"] + st.turnaround_times)
             stat_writer.writerow(["average queue lengths"] + st.avg_proc_qlens)
             stat_writer.writerow(["response times"] + st.response_times)
+            stat_writer.writerow(["required cpu times"] + st.required_cpu_times)
+            stat_writer.writerow(["process sizes"] + st.proc_sizes)
+            stat_writer.writerow(["turnaround times"] + st.turnaround_div_rt)
         Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.config_name +
                                         '_' + sim_stats.sched_name + '_stats.csv')
 
@@ -133,13 +172,17 @@ class Simsched_Analysis(object):
 
         csv_fmt = [["plist configuration"],
                         ["scheduler"],
+                        ["pids"],
                         ["instantiation times"],
                         ["start_times"],
                         ["finish times"],
                         ["total wait times"],
                         ["turnaround times"],
                         ["average queue lengths"],
-                        ["response times"]]
+                        ["response times"],
+                        ["required cpu time"],
+                        ["process sizes"],
+                        ["turnaround stat"]]
 
         for i in range(0, len(csv_fmt)):
             for j in range(0, len(sim_stats)):
@@ -148,19 +191,27 @@ class Simsched_Analysis(object):
                 elif i == 1:
                     csv_fmt[i] += (sim_stats[j].sched_name_rpt)
                 elif i == 2:
-                    csv_fmt[i] += (sim_stats[j].instantiation_times)
+                    csv_fmt[i] += (sim_stats[j].pids)
                 elif i == 3:
+                    csv_fmt[i] += (sim_stats[j].instantiation_times)
+                elif i == 4:
                     csv_fmt[i] += (sim_stats[j].start_times)
-                elif i ==4:
-                    csv_fmt[i] += (sim_stats[j].finish_times)
                 elif i == 5:
-                    csv_fmt[i] += (sim_stats[j].qwts)
+                    csv_fmt[i] += (sim_stats[j].finish_times)
                 elif i == 6:
-                    csv_fmt[i] += (sim_stats[j].turnaround_times)
+                    csv_fmt[i] += (sim_stats[j].qwts)
                 elif i == 7:
-                    csv_fmt[i] += (sim_stats[j].avg_proc_qlens)
+                    csv_fmt[i] += (sim_stats[j].turnaround_times)
                 elif i == 8:
+                    csv_fmt[i] += (sim_stats[j].avg_proc_qlens)
+                elif i == 9:
                     csv_fmt[i] += (sim_stats[j].response_times)
+                elif i == 10:
+                    csv_fmt[i] += (sim_stats[j].required_cpu_times)
+                elif i == 11:
+                    csv_fmt[i] += (sim_stats[j].proc_sizes)
+                elif i == 12:
+                    csv_fmt[i] += (sim_stats[j].turnaround_div_rt)
         return csv_fmt
 
     @staticmethod
@@ -180,6 +231,7 @@ class Sim_stats(object):
     def __init__(self):
         self.config_name = ""
         self.sched_name = ""
+        self.pids = []
         self.start_times = []
         self.plist_config_rpt = []
         self.sched_name_rpt = []
@@ -191,6 +243,9 @@ class Sim_stats(object):
         self.instantiation_times = []
         self.start_times = []
         self.finish_times = []
+        self.required_cpu_times = []
+        self.proc_sizes = []
+        self.turnaround_div_rt = []
 
 
 

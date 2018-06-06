@@ -53,6 +53,8 @@ class Sched_base(object):
         return SIMTIME
 
     def run(self, proc_list):
+        self.SIMTIME = 0
+        self.finished_list = []
         while True:
             if self.empty:
                 # case empty scheduler and non_empty proc_list
@@ -72,8 +74,8 @@ class Sched_base(object):
 
             proc = self.fetch_process()
 
-            if proc == None:
-                break
+            if proc is None:
+                continue
 
             proc.fetch_count += 1
             proc.queue_lens.append(self.queue_len())

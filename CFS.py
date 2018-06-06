@@ -29,9 +29,8 @@ class CFS(Sched_base):
 
     def fetch_process(self):
         length = len(self.ready_list)
-        if length == 1:
+        if length == 0:
             self.empty = True
-        elif length == 0:
             return None
         return self.ready_list.pop(0)
 

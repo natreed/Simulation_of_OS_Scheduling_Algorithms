@@ -40,28 +40,30 @@ def short_runtimes_gen(list_size):
 def long_runtimes_gen(list_size):
     long_runtimes = []
     for i in range(0, list_size):
-        long_runtimes.append(random.randint(10, 500))
+        long_runtimes.append(random.randint(1000, 5000))
     return long_runtimes
 
 def long_to_short_runtimes_gen(list_size):
     list_size = ceil(list_size/2)
-    return long_runtimes_gen(list_size) + short_runtimes_gen(list_size)
+    lst = long_runtimes_gen(list_size) + short_runtimes_gen(list_size)
+    return lst
 
 def short_to_long_runtimes_gen(list_size):
     list_size = ceil(list_size/2)
-    return short_runtimes_gen(list_size) + long_runtimes_gen(list_size)
+    lst = short_runtimes_gen(list_size) + long_runtimes_gen(list_size)
+    return lst
 
 
 def random_runtimes_gen(list_size):
     proc_runtimes = []
     for i in range(0, list_size):
-        proc_runtimes.append(random.randint(10, 1000))
+        proc_runtimes.append(random.randint(10, 5000))
     return proc_runtimes
 
 def instantiation_times_gen(list_size):
     instantiation_times = []
     for i in range(0, list_size):
-        instantiation_times.append(random.randint(0,20))
+        instantiation_times.append(random.randint(0,5000))
     return sorted(instantiation_times)
 
 
