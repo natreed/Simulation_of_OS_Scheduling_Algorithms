@@ -1,5 +1,9 @@
+# Algorithm comes from
+# https://tampub.uta.fi/bitstream/handle/10024/96864/GRADU-1428493916.pdf
+
+
 from Sched_baseclass import Sched_base
-from math import ceil
+import math
 
 CFS_TIMESLICE = 10
 
@@ -8,8 +12,6 @@ class CFS(Sched_base):
         super().__init__(_time_slice)
         self.name = "CFS"
 
-    # TODO: Latency for put and fetch operations not accounted for
-    # what to do for O(1) vs O(logn) data structures?
     def put_process(self, new_proc):
         if len(self.ready_list) == 0:
             new_proc.time_slice = self.time_slice
@@ -17,8 +19,8 @@ class CFS(Sched_base):
             self.empty = False
             return
 
-        nptsl = ceil(self.time_slice / (len(self.ready_list) + 1))
-        new_proc.time_slice = nptsl
+        nprc = self.calculate_tslice()
+        new_proc.time_slice = math.ceil(nprc)
 
         for i, process in enumerate(self.ready_list):
             if process.total_runtime > new_proc.total_runtime:
@@ -34,4 +36,26 @@ class CFS(Sched_base):
             return None
         return self.ready_list.pop(0)
 
+    def get_overhead(self):
+        ml = math.log(1, 2)
+        if len(self.ready_list) == 0:
+            return 1
+        overhead = math.ceil(math.log(len(self.ready_list), 2))
+        return overhead
 
+
+    def calculate_tslice(self):
+        # keep burst in range 1 - 20
+        while True:
+            try:
+                nprc = self.time_slice / (len(self.ready_list))
+                if nprc >= 1 and nprc <= 20:
+                    break
+                if nprc < 1:
+                    self.time_slice += 4
+                if nprc > 20:
+                    self.time_slice -= 4
+            except Exception:
+                print("broke")
+
+        return nprc

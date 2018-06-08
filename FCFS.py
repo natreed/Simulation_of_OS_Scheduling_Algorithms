@@ -1,4 +1,5 @@
 from Sched_baseclass import Sched_base
+from math import ceil
 
 class FCFS(Sched_base):
     def __init__(self, _time_slice):
@@ -28,6 +29,7 @@ class FCFS(Sched_base):
         else:
             return self.ready_list.pop(0)
 
-
+    def get_overhead(self):
+        return ceil(len(self.ready_list)/2)
 
 

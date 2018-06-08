@@ -6,13 +6,25 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
+g = sns.lmplot(x='instantiation times',
+                   y='turnaround stat',
+                   data = df,
+                   hue ='process sizes',
+                   col='scheduler',
+                   legend=False
+                   )
+g.despine(left=True)
+plt.legend(loc='upper right')
+plt.show()
+exit(0)
+
 g = sns.factorplot(x='plist configuration',
                    y='total wait times',
                    hue='scheduler',
-                   data = df,
-                   size = 8,
-                   kind = "bar",
-                   palette = "muted"
+                   data=df,
+                   size=8,
+                   kind="bar",
+                   palette="muted"
                    )
 plt.show()
 exit(0)
@@ -54,17 +66,7 @@ plt.legend(loc='upper right')
 plt.show()
 exit(0)
 
-g = sns.lmplot(x='instantiation times',
-                   y='turnaround stat',
-                   data = df,
-                   hue ='process sizes',
-                   col='scheduler',
-                   legend=False
-                   )
-g.despine(left=True)
-plt.legend(loc='upper right')
-plt.show()
-exit(0)
+
 
 g = sns.lmplot(x='required cpu time',
                    y='turnaround times',

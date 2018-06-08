@@ -1,5 +1,6 @@
 from Sched_baseclass import Sched_base
 from Process import P_Priority, DEFAULT_BUDGET
+from math import ceil
 
 
 TTP = 500  #time to promote
@@ -16,6 +17,9 @@ class MLFQ(Sched_base):
 
     def queue_len(self):
         return sum(list(map(lambda x: len(x),self.ready_list)))  # add 1 to match base implementation?
+
+    def get_overhead(self):
+        return ceil(len(self.ready_list)/2)
 
     def put_process(self, new_proc):
         new_proc.time_slice = self.time_slice
