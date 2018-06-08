@@ -9,7 +9,7 @@ class Simsched_Analysis(object):
     def __init__(self, _p_list, _sched_name, config):
         self.plist_config = config.name
         self.sched_name = _sched_name
-        self.plist = sorted(_p_list, key=attrgetter('pid'))
+        self.plist = _p_list
         self.sim_stats = Sim_stats()
         self.plist_len = len(self.plist)
 
@@ -70,6 +70,9 @@ class Simsched_Analysis(object):
             response_times.append(self.plist[i].start_time - self.plist[i].instantiation_time)
         return response_times
 
+    def avg_response_time(self):
+        return sum(self.get_response_times())/self.plist_len
+
     def get_start_times(self):
         start_times = []
         for i in range(0, self.plist_len):
@@ -103,16 +106,24 @@ class Simsched_Analysis(object):
     def get_proc_sizes(self):
         sizes = []
         for i in range(0, self.plist_len):
-            if self.plist[i].required_cpu_time > 4000:
+            if self.plist[i].required_cpu_time > 500:
                 sizes.append('LARGE')
-            elif self.plist[i].required_cpu_time > 1000:
+            elif self.plist[i].required_cpu_time > 100:
                 sizes.append('MEDiUM')
-            elif self.plist[i].required_cpu_time > 50:
+            elif self.plist[i].required_cpu_time > 10:
                 sizes.append('SMALL')
             else:
                 sizes.append('TINY')
         return sizes
 
+    def get_throughput(self):
+        sum_cpu_time = 0
+        for i in range(0, self.plist_len):
+            sum_cpu_time += self.plist[i].required_cpu_time
+        sim_time = self.plist[self.plist_len - 1].finish_time
+        #finish time of last process is total simulation time
+        throughput = sum_cpu_time/sim_time
+        return throughput
 
     # contains the results
     def get_sim_stats(self):
@@ -131,6 +142,8 @@ class Simsched_Analysis(object):
         sim_stats.pids = self.get_pids()
         sim_stats.turnaround_div_rt = self.get_turnaround_over_sz()
         sim_stats.proc_sizes = self.get_proc_sizes()
+        sim_stats.throughput = self.get_throughput()
+        sim_stats.avg_response_time = self.avg_response_time()
         for i in range(0, len(sim_stats.start_times)):
             sim_stats.plist_config_rpt.append(sim_stats.config_name)
             sim_stats.sched_name_rpt.append(sim_stats.sched_name)
@@ -167,6 +180,8 @@ class Simsched_Analysis(object):
             stat_writer.writerow(["required cpu times"] + st.required_cpu_times)
             stat_writer.writerow(["process sizes"] + st.proc_sizes)
             stat_writer.writerow(["turnaround times"] + st.turnaround_div_rt)
+            stat_writer.writerow(["throughput"] + [st.throughput])
+            stat_writer.writerow(["average response time"] + [st.avg_response_time])
         Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.config_name +
                                         '_' + sim_stats.sched_name + '_stats.csv')
 
@@ -185,7 +200,9 @@ class Simsched_Analysis(object):
                         ["response times"],
                         ["required cpu time"],
                         ["process sizes"],
-                        ["turnaround stat"]]
+                        ["turnaround stat"],
+                        ["throughput"],
+                        ["average response time"]]
 
         for i in range(0, len(csv_fmt)):
             for j in range(0, len(sim_stats)):
@@ -215,6 +232,10 @@ class Simsched_Analysis(object):
                     csv_fmt[i] += (sim_stats[j].proc_sizes)
                 elif i == 12:
                     csv_fmt[i] += (sim_stats[j].turnaround_div_rt)
+                elif i == 13:
+                    csv_fmt[i] += ([sim_stats[j].throughput])
+                elif i == 14:
+                    csv_fmt[i] += ([sim_stats[j].avg_response_time])
         return csv_fmt
 
     @staticmethod
@@ -234,6 +255,8 @@ class Sim_stats(object):
     def __init__(self):
         self.config_name = ""
         self.sched_name = ""
+        self.throughput = 0
+        self.avg_response_time = 0
         self.pids = []
         self.start_times = []
         self.plist_config_rpt = []

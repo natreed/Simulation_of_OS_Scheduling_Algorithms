@@ -33,31 +33,33 @@ class Sched_base(object):
         else:
             return -1
 
-    def switch_to_ready(self, proc, SIMTIME):
-        proc.cpu_arrival.append(SIMTIME)
+    def switch_to_ready(self, proc):
+        proc.cpu_arrival.append(self.SIMTIME)
+        self.SIMTIME += proc.time_slice
         proc.cpu_time_remaining -= proc.time_slice
         proc.p_budget -= proc.time_slice  # for MLFQ
         proc.p_state = P_State.READY
         proc.next_state = P_State.RUNNING
 
-    def switch_to_run(self, proc, SIMTIME):
+    def switch_to_run(self, proc):
         if proc.p_state == P_State.CREATED:
-            proc.start_time = SIMTIME
+            self.SIMTIME += self.get_overhead() # process has not yet been added to ready list
+            proc.start_time = self.SIMTIME
 
         if (proc.cpu_time_remaining - proc.time_slice) <= 0:
             proc.total_runtime = proc.total_runtime + proc.cpu_time_remaining
-            proc.cpu_arrival.append(SIMTIME)
-            proc.finish_time = SIMTIME + proc.cpu_time_remaining
-            SIMTIME += proc.cpu_time_remaining + self.get_overhead()
+            proc.cpu_arrival.append(self.SIMTIME)
+            proc.finish_time = self.SIMTIME + proc.cpu_time_remaining
+            self.SIMTIME += proc.cpu_time_remaining
             proc.cpu_time_remaining = 0
             proc.p_state = P_State.ZOMBIE
             proc.next_state = P_State.FINISHED
         else:
-            SIMTIME += proc.time_slice + self.get_overhead()
             proc.next_state = P_State.READY
+
             proc.total_runtime += proc.time_slice
             proc.p_state = P_State.RUNNING
-        return SIMTIME
+        return self.SIMTIME
 
 
     def run(self, proc_list):
@@ -87,13 +89,17 @@ class Sched_base(object):
 
             proc.fetch_count += 1
             proc.queue_lens.append(self.queue_len())
-            self.SIMTIME = self.switch_to_run(proc, self.SIMTIME)
+            self.SIMTIME = self.switch_to_run(proc)
 
             if proc.next_state == P_State.READY:
-                self.switch_to_ready(proc, self.SIMTIME)
+                self.switch_to_ready(proc)
+                self.SIMTIME += self.get_overhead() # add overhead for insertion
                 self.put_process(proc)
             elif proc.next_state == P_State.FINISHED:
+                self.SIMTIME += 1  # add overhead for removing from readylist O(1)
                 proc.p_state = P_State.FINISHED
                 self.finished_list.append(proc)
 
+        print(self.SIMTIME)
+        print(self.finished_list[len(self.finished_list) - 1].required_cpu_time)
         return self.finished_list

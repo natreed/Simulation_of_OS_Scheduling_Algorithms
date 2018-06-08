@@ -19,7 +19,7 @@ class MLFQ(Sched_base):
         return sum(list(map(lambda x: len(x),self.ready_list)))  # add 1 to match base implementation?
 
     def get_overhead(self):
-        return ceil(len(self.ready_list)/2)
+        return ceil(self.queue_len()/2) + 1
 
     def put_process(self, new_proc):
         new_proc.time_slice = self.time_slice

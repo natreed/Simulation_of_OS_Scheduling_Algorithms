@@ -37,18 +37,16 @@ class CFS(Sched_base):
         return self.ready_list.pop(0)
 
     def get_overhead(self):
-        ml = math.log(1, 2)
         if len(self.ready_list) == 0:
             return 1
         overhead = math.ceil(math.log(len(self.ready_list), 2))
         return overhead
 
-
     def calculate_tslice(self):
         # keep burst in range 1 - 20
         while True:
             try:
-                nprc = self.time_slice / (len(self.ready_list))
+                nprc = self.time_slice / ((len(self.ready_list) + 1))
                 if nprc >= 1 and nprc <= 20:
                     break
                 if nprc < 1:
@@ -57,5 +55,4 @@ class CFS(Sched_base):
                     self.time_slice -= 4
             except Exception:
                 print("broke")
-
         return nprc
