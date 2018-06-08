@@ -106,11 +106,11 @@ class Simsched_Analysis(object):
     def get_proc_sizes(self):
         sizes = []
         for i in range(0, self.plist_len):
-            if self.plist[i].required_cpu_time > 500:
+            if self.plist[i].required_cpu_time > 1000:
                 sizes.append('LARGE')
-            elif self.plist[i].required_cpu_time > 100:
+            elif self.plist[i].required_cpu_time > 500:
                 sizes.append('MEDiUM')
-            elif self.plist[i].required_cpu_time > 10:
+            elif self.plist[i].required_cpu_time > 50:
                 sizes.append('SMALL')
             else:
                 sizes.append('TINY')
