@@ -6,15 +6,6 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
-g = sns.factorplot(x='scheduleer',
-                   y='average response time',
-                   data = df,
-                   hue='process sizes',
-                   sharex=False,
-                   sharey=False,
-                   )
-plt.show()
-exit(0)
 
 g = sns.lmplot(x='pids',
                    y='turnaround stat',
@@ -28,7 +19,7 @@ g = sns.lmplot(x='pids',
 g.despine(left=True)
 plt.legend(loc='upper right')
 plt.savefig('Plots/pids_x_turnaround_stat_y')
-exit(0)
+
 
 g = sns.lmplot(x='required cpu time',
                    y='turnaround stat',
@@ -39,18 +30,20 @@ g = sns.lmplot(x='required cpu time',
                    sharey=False
                    )
 plt.savefig('Plots/cpu_time_x_turnaround_stat_y')
-exit(0)
+
 
 g = sns.lmplot(x='required cpu time',
                    y='turnaround times',
                    data = df,
                    hue ='scheduler',
-                   legend=False
+                   legend=False,
+                   sharex=False,
+                   sharey=False
                    )
 g.despine(left=True)
 plt.legend(loc='upper right')
 plt.savefig('Plots/cpu_time_x_turnaround_time_y')
-exit(0)
+
 
 g = sns.factorplot(x='plist configuration',
                    y='total wait times',
@@ -61,7 +54,7 @@ g = sns.factorplot(x='plist configuration',
                    palette="muted"
                    )
 plt.savefig('Plots/total_wait_times_hist')
-exit(0)
+
 
 g = sns.lmplot(x='start_times',
                    y='finish times',
