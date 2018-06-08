@@ -2,13 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c569c354-e6a2-47e8-9d22-bb6dcd00ee1e" name="Default" comment="committing stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/Simulator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Simulator.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/RAND_CFS_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/RAND_CFS_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/RAND_MLFQ_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/RAND_MLFQ_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/RAND_RR_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/RAND_RR_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/WLONG_CFS_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/WLONG_CFS_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/WLONG_MLFQ_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/WLONG_MLFQ_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/WLONG_RR_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/WLONG_RR_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/WSRT_CFS_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/WSRT_CFS_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/WSRT_MLFQ_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/WSRT_MLFQ_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSV_Data/WSRT_RR_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CSV_Data/WSRT_RR_stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plots/cpu_time_x_turnaround_stat_y.png" beforeDir="false" afterPath="$PROJECT_DIR$/Plots/cpu_time_x_turnaround_stat_y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plots/cpu_time_x_turnaround_time_y.png" beforeDir="false" afterPath="$PROJECT_DIR$/Plots/cpu_time_x_turnaround_time_y.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plots/pids_x_turnaround_stat_y.png" beforeDir="false" afterPath="$PROJECT_DIR$/Plots/pids_x_turnaround_stat_y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plots/start_times_v_finish_times.png" beforeDir="false" afterPath="$PROJECT_DIR$/Plots/start_times_v_finish_times.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plots/total_wait_times_hist.png" beforeDir="false" afterPath="$PROJECT_DIR$/Plots/total_wait_times_hist.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_plots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Results_Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Results_Analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sched_baseclass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sched_baseclass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sim_stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sim_stats.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,14 +32,14 @@
     <SUITE FILE_PATH="coverage/Simulator$test.coverage" NAME="test Coverage Results" MODIFIED="1526273772185" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Simulator$FIFO.coverage" NAME="FIFO Coverage Results" MODIFIED="1526404873984" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Simulator$codecs.coverage" NAME="codecs Coverage Results" MODIFIED="1526662384880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6" />
-    <SUITE FILE_PATH="coverage/Simulator$Results_Analysis.coverage" NAME="Results_Analysis Coverage Results" MODIFIED="1528485293334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Simulator$FCFS.coverage" NAME="FCFS Coverage Results" MODIFIED="1527382521726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Simulator$Results_Analysis.coverage" NAME="Results_Analysis Coverage Results" MODIFIED="1528500694723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Simulator$CFS.coverage" NAME="CFS Coverage Results" MODIFIED="1526767094216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Simulator$simulator.coverage" NAME="simulator Coverage Results" MODIFIED="1528488010697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Simulator$plist_generator.coverage" NAME="plist_generator Coverage Results" MODIFIED="1528487068981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Simulator$Sched_baseclass.coverage" NAME="Sched_baseclass Coverage Results" MODIFIED="1528482663206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Simulator$simulator.coverage" NAME="simulator Coverage Results" MODIFIED="1528500700003" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Simulator$Sched_baseclass.coverage" NAME="Sched_baseclass Coverage Results" MODIFIED="1528498510840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled$test.coverage" NAME="test Coverage Results" MODIFIED="1526142936904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Simulator$data_plots.coverage" NAME="data_plots Coverage Results" MODIFIED="1528493549398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Simulator$data_plots.coverage" NAME="data_plots Coverage Results" MODIFIED="1528498663394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -48,35 +59,23 @@
     <favorites_list name="Simulator" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.8421875">
+    <splitter split-orientation="horizontal" split-proportion="0.6539062">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="Sched_baseclass.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Sched_baseclass.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="273">
-                  <caret line="68" selection-start-line="68" selection-end-line="68" />
+                <state relative-caret-position="368">
+                  <caret line="102" selection-start-line="102" selection-end-line="102" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="simulator.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="simulator.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/simulator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MLFQ.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/MLFQ.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="195">
-                  <caret line="13" column="41" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
-                  <folding>
-                    <element signature="e#0#38#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="60">
+                  <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
                 </state>
               </provider>
             </entry>
@@ -84,8 +83,8 @@
           <file leaf-file-name="data_plots.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/data_plots.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="383">
-                  <caret line="58" column="31" lean-forward="true" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
+                <state relative-caret-position="600">
+                  <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
                   <folding>
                     <element signature="e#0#19#0" expanded="true" />
                   </folding>
@@ -93,16 +92,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="cpu_time_x_turnaround_time_y.png" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Plots/cpu_time_x_turnaround_time_y.png">
-              <provider selected="true" editor-type-id="images" />
-            </entry>
-          </file>
           <file leaf-file-name="plist_generator.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/plist_generator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="285">
-                  <caret line="19" column="63" selection-start-line="19" selection-start-column="63" selection-end-line="19" selection-end-column="63" />
+                <state relative-caret-position="86">
+                  <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
                   <folding>
                     <element signature="e#0#27#0" expanded="true" />
                   </folding>
@@ -110,11 +104,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="CFS.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="CFS.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/CFS.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="334">
-                  <caret line="54" selection-start-line="54" selection-end-line="54" />
+                <state relative-caret-position="270">
+                  <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-end-line="19" />
                   <folding>
                     <element signature="e#99#137#0" expanded="true" />
                   </folding>
@@ -125,8 +119,8 @@
           <file leaf-file-name="Results_Analysis.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Results_Analysis.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="15">
-                  <caret line="112" column="53" selection-start-line="112" selection-start-column="53" selection-end-line="112" selection-end-column="53" />
+                <state relative-caret-position="205">
+                  <caret line="115" column="33" selection-start-line="115" selection-start-column="33" selection-end-line="115" selection-end-column="33" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -138,11 +132,20 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="Process.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Process.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Process.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="334">
                   <caret line="42" column="26" selection-start-line="42" selection-start-column="26" selection-end-line="42" selection-end-column="26" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="sim_stats.csv" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/sim_stats.csv">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="195">
+                  <caret line="13" column="59" lean-forward="true" selection-start-line="13" selection-start-column="59" selection-end-line="13" selection-end-column="59" />
                 </state>
               </provider>
             </entry>
@@ -193,12 +196,12 @@
         <option value="$PROJECT_DIR$/SJF.py" />
         <option value="$PROJECT_DIR$/FCFS.py" />
         <option value="$PROJECT_DIR$/MLFQ.py" />
-        <option value="$PROJECT_DIR$/Sched_baseclass.py" />
         <option value="$PROJECT_DIR$/CFS.py" />
-        <option value="$PROJECT_DIR$/plist_generator.py" />
         <option value="$PROJECT_DIR$/simulator.py" />
-        <option value="$PROJECT_DIR$/Results_Analysis.py" />
         <option value="$PROJECT_DIR$/data_plots.py" />
+        <option value="$PROJECT_DIR$/Sched_baseclass.py" />
+        <option value="$PROJECT_DIR$/plist_generator.py" />
+        <option value="$PROJECT_DIR$/Results_Analysis.py" />
       </list>
     </option>
   </component>
@@ -271,7 +274,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.data_plots">
+  <component name="RunManager" selected="Python.simulator">
     <configuration name="FIFO" type="PythonConfigurationType" factoryName="Python">
       <module name="Simulator" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -396,11 +399,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.data_plots" />
         <item itemvalue="Python.simulator" />
-        <item itemvalue="Python.plist_generator" />
         <item itemvalue="Python.Results_Analysis" />
+        <item itemvalue="Python.data_plots" />
         <item itemvalue="Python.Sched_baseclass" />
+        <item itemvalue="Python.plist_generator" />
       </list>
     </recent_temporary>
   </component>
@@ -448,15 +451,15 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.33731344" />
       <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49361023" visible="true" weight="0.29010695" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49361023" visible="true" weight="0.29010695" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49895832" visible="true" weight="0.2515625" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49895832" weight="0.2890625" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.7476562" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.3140625" />
       <window_info id="Structure" order="1" sideWeight="0.50104165" side_tool="true" weight="0.25559106" />
       <window_info id="Favorites" order="2" sideWeight="0.50104165" side_tool="true" weight="0.25559106" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4941427" weight="0.41458333" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4941427" weight="0.41443852" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -465,6 +468,29 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32916668" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49895832" visible="true" weight="0.184375" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.33731344" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.815625" />
+      <window_info id="Structure" order="1" sideWeight="0.50104165" side_tool="true" weight="0.25559106" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49361023" weight="0.29010695" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32916668" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4941427" visible="true" weight="0.41443852" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5063898" side_tool="true" weight="0.290625" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Favorites" order="2" sideWeight="0.50104165" side_tool="true" weight="0.25559106" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -485,7 +511,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="368" />
+      <option name="time" value="371" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -494,13 +520,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/simulator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="32" column="38" lean-forward="true" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/plist_generator.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -630,36 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simulator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plist_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="63" selection-start-line="19" selection-start-column="63" selection-end-line="19" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Results_Analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="112" column="53" selection-start-line="112" selection-start-column="53" selection-end-line="112" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Plots/start_times_v_finish_times.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Process.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
@@ -667,39 +656,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CFS.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-end-line="19" />
+          <folding>
+            <element signature="e#99#137#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Plots/start_times_v_finish_times.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Plots/pids_x_turnaround_stat_y.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Plots/cpu_time_x_turnaround_time_y.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Plots/cpu_time_x_turnaround_stat_y.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plist_generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data_plots.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="58" column="31" lean-forward="true" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
+        <state relative-caret-position="600">
+          <caret line="40" column="29" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Plots/cpu_time_x_turnaround_stat_y.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Plots/cpu_time_x_turnaround_time_y.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Plots/pids_x_turnaround_stat_y.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sched_baseclass.py">
+    <entry file="file://$PROJECT_DIR$/sim_stats.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="68" selection-start-line="68" selection-end-line="68" />
+        <state relative-caret-position="195">
+          <caret line="13" column="59" lean-forward="true" selection-start-line="13" selection-start-column="59" selection-end-line="13" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CFS.py">
+    <entry file="file://$PROJECT_DIR$/Sched_baseclass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="368">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Results_Analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="115" column="33" selection-start-line="115" selection-start-column="33" selection-end-line="115" selection-end-column="33" />
           <folding>
-            <element signature="e#99#137#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simulator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>

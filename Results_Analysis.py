@@ -55,7 +55,7 @@ class Simsched_Analysis(object):
         for i in range(0, self.plist_len):
             sum_lengths += sum(self.plist[i].queue_lens)
             sum_fetch_counts += self.plist[i].fetch_count
-        return sum_lengths/sum_fetch_counts
+        return ceil(sum_lengths/sum_fetch_counts)
 
     # list of average queue lengths for each process
     def get_avg_proc_qlens(self):
@@ -63,6 +63,9 @@ class Simsched_Analysis(object):
         for i in range(0, self.plist_len):
             avg_qlens.append(round(sum(self.plist[i].queue_lens)/self.plist[i].fetch_count, 1))
         return avg_qlens
+
+    def get_overall_avg_qlens(self):
+        return ceil(self.get_avg_proc_qlens()/self.plist_len)
 
     def get_response_times(self):
         response_times = []
@@ -123,7 +126,7 @@ class Simsched_Analysis(object):
         sim_time = self.plist[self.plist_len - 1].finish_time
         #finish time of last process is total simulation time
         throughput = sum_cpu_time/sim_time
-        return throughput
+        return ceil(throughput)
 
     # contains the results
     def get_sim_stats(self):
@@ -143,10 +146,15 @@ class Simsched_Analysis(object):
         sim_stats.turnaround_div_rt = self.get_turnaround_over_sz()
         sim_stats.proc_sizes = self.get_proc_sizes()
         sim_stats.throughput = self.get_throughput()
+        sim_stats.avg_queue_len = self.get_avg_sim_queue_len()
         sim_stats.avg_response_time = self.avg_response_time()
+
         for i in range(0, len(sim_stats.start_times)):
             sim_stats.plist_config_rpt.append(sim_stats.config_name)
             sim_stats.sched_name_rpt.append(sim_stats.sched_name)
+            sim_stats.throughput_rpt.append(sim_stats.throughput)
+            sim_stats.avg_queue_len_rpt.append(sim_stats.avg_queue_len)
+            sim_stats.avg_response_time_rpt.append(sim_stats.avg_response_time)
 
         # TODO: add more stats
         return sim_stats
@@ -182,6 +190,7 @@ class Simsched_Analysis(object):
             stat_writer.writerow(["turnaround times"] + st.turnaround_div_rt)
             stat_writer.writerow(["throughput"] + [st.throughput])
             stat_writer.writerow(["average response time"] + [st.avg_response_time])
+            stat_writer.writerow(["average queue length"] + [st.avg_queue_len])
         Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.config_name +
                                         '_' + sim_stats.sched_name + '_stats.csv')
 
@@ -202,7 +211,8 @@ class Simsched_Analysis(object):
                         ["process sizes"],
                         ["turnaround stat"],
                         ["throughput"],
-                        ["average response time"]]
+                        ["average response time"],
+                        ["average queue length"]]
 
         for i in range(0, len(csv_fmt)):
             for j in range(0, len(sim_stats)):
@@ -233,9 +243,11 @@ class Simsched_Analysis(object):
                 elif i == 12:
                     csv_fmt[i] += (sim_stats[j].turnaround_div_rt)
                 elif i == 13:
-                    csv_fmt[i] += ([sim_stats[j].throughput])
+                    csv_fmt[i] += (sim_stats[j].throughput_rpt)
                 elif i == 14:
-                    csv_fmt[i] += ([sim_stats[j].avg_response_time])
+                    csv_fmt[i] += (sim_stats[j].avg_response_time_rpt)
+                elif i == 15:
+                    csv_fmt[i] += (sim_stats[j].avg_queue_len_rpt)
         return csv_fmt
 
     @staticmethod
@@ -256,7 +268,9 @@ class Sim_stats(object):
         self.config_name = ""
         self.sched_name = ""
         self.throughput = 0
+        self.throughput_rpt = []
         self.avg_response_time = 0
+        self.avg_response_time_rpt = []
         self.pids = []
         self.start_times = []
         self.plist_config_rpt = []
@@ -264,6 +278,7 @@ class Sim_stats(object):
         self.qwts = []
         self.turnaround_times = []
         self.avg_queue_len = 0
+        self.avg_queue_len_rpt = []
         self.avg_proc_qlens = []
         self.response_times = []
         self.instantiation_times = []
