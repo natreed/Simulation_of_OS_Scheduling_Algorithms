@@ -6,6 +6,40 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
+g = sns.factorplot(x='scheduler',
+                   y='',
+                   hue='scheduler',
+                   data=df,
+                   size=8,
+                   kind="bar",
+                   palette="muted"
+                   )
+plt.savefig('Plots/total_wait_times_hist')
+plt.show()
+exit(0)
+
+g = sns.factorplot(x='scheduler',
+                   y='throughput',
+                   data=df,
+                   size=8,
+                   kind="bar",
+                   palette="muted"
+                   )
+plt.savefig('Plots/throughput')
+plt.show()
+exit(0)
+
+g = sns.factorplot(x='process sizes',
+                   y='average queue length',
+                   hue='scheduler',
+                   data=df,
+                   size=8,
+                   kind="bar",
+                   palette="muted"
+                   )
+plt.savefig('Plots/avg_queue_lengths')
+plt.show()
+exit(0)
 
 g = sns.lmplot(x='pids',
                    y='turnaround stat',

@@ -126,7 +126,7 @@ class Simsched_Analysis(object):
         sim_time = self.plist[self.plist_len - 1].finish_time
         #finish time of last process is total simulation time
         throughput = sum_cpu_time/sim_time
-        return ceil(throughput)
+        return throughput
 
     # contains the results
     def get_sim_stats(self):
