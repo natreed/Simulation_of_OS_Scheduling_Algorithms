@@ -11,7 +11,7 @@ class plist_rt_spec(enum.Enum):
 class build_procs_data(object):
     def __init__(self, spec):
         # list size must be even for the runtime list and the instantiation time lists to match up
-        self.list_size = 100
+        self.list_size = 500
         self.runtimes = []
         self.spec = spec
         self.instantiation_times = instantiation_times_gen(self.list_size)
@@ -33,13 +33,13 @@ def tiny_runtimes_gen(list_size):
 def short_runtimes_gen(list_size):
     short_runtimes = []
     for i in range(0, list_size):
-        short_runtimes.append(random.randint(50, 500))
+        short_runtimes.append(random.randint(50, 200))
     return short_runtimes
 
 def long_runtimes_gen(list_size):
     long_runtimes = []
     for i in range(0, list_size):
-        long_runtimes.append(random.randint(500, 5000))
+        long_runtimes.append(random.randint(200, 1000))
     return long_runtimes
 
 def weighted_short_runtimes_gen(list_size):
@@ -67,13 +67,13 @@ def weighted_long_runtimes_gen(list_size):
 def random_runtimes_gen(list_size):
     proc_runtimes = []
     for i in range(0, list_size):
-        proc_runtimes.append(random.randint(10, 5000))
+        proc_runtimes.append(random.randint(10, 1000))
     return proc_runtimes
 
 def instantiation_times_gen(list_size):
     instantiation_times = []
     for i in range(0, list_size):
-        instantiation_times.append(random.randint(0,10000))
+        instantiation_times.append(random.randint(0,100000))
     return sorted(instantiation_times)
 
 

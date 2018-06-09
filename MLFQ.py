@@ -3,7 +3,7 @@ from Process import P_Priority, DEFAULT_BUDGET
 from math import ceil
 
 
-TTP = 500  #time to promote
+TTP = 1500  #time to promote
 
 class MLFQ(Sched_base):
 

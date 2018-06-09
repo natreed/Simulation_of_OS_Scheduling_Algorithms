@@ -6,64 +6,35 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
-g = sns.factorplot(x='scheduler',
-                   y='',
+g = sns.lmplot(x='pids',
+                   y='total wait times',
+                   hue='scheduler',
+                   data=df,
+                   size=8,
+                   palette="muted"
+                   )
+plt.savefig('Plots/pids_x_total_wait_y')
+exit(0)
+g = sns.factorplot(x='plist configuration',
+                   y='average queue lengths',
                    hue='scheduler',
                    data=df,
                    size=8,
                    kind="bar",
                    palette="muted"
                    )
-plt.savefig('Plots/total_wait_times_hist')
-plt.show()
-exit(0)
-
-g = sns.factorplot(x='scheduler',
-                   y='throughput',
-                   data=df,
-                   size=8,
-                   kind="bar",
-                   palette="muted"
-                   )
-plt.savefig('Plots/throughput')
-plt.show()
-exit(0)
-
-g = sns.factorplot(x='process sizes',
-                   y='average queue length',
-                   hue='scheduler',
-                   data=df,
-                   size=8,
-                   kind="bar",
-                   palette="muted"
-                   )
-plt.savefig('Plots/avg_queue_lengths')
-plt.show()
-exit(0)
+plt.savefig('Plots/config_x_avg_queue_lens_y')
 
 g = sns.lmplot(x='pids',
                    y='turnaround stat',
                    data = df,
                    hue ='scheduler',
                    col='process sizes',
-                   sharex=False,
-                   sharey=False,
                    legend=False
                    )
 g.despine(left=True)
 plt.legend(loc='upper right')
 plt.savefig('Plots/pids_x_turnaround_stat_y')
-
-
-g = sns.lmplot(x='required cpu time',
-                   y='turnaround stat',
-                   data=df,
-                   hue='scheduler',
-                   col='process sizes',
-                   sharex=False,
-                   sharey=False
-                   )
-plt.savefig('Plots/cpu_time_x_turnaround_stat_y')
 
 
 g = sns.lmplot(x='required cpu time',
@@ -79,16 +50,44 @@ plt.legend(loc='upper right')
 plt.savefig('Plots/cpu_time_x_turnaround_time_y')
 
 
-g = sns.factorplot(x='plist configuration',
-                   y='total wait times',
+g = sns.factorplot(x='scheduler',
+                   y='average response time',
+                   data=df,
+                   size=8,
+                   kind="bar",
+                   palette="muted"
+                   )
+plt.savefig('Plots/average_response_time_hist')
+
+
+g = sns.factorplot(x='scheduler',
+                   y='throughput',
+                   data=df,
+                   size=8,
+                   kind="bar",
+                   palette="muted"
+                   )
+plt.savefig('Plots/throughput')
+
+g = sns.factorplot(x='scheduler',
+                   y='average queue length',
                    hue='scheduler',
                    data=df,
                    size=8,
                    kind="bar",
                    palette="muted"
                    )
-plt.savefig('Plots/total_wait_times_hist')
+plt.savefig('Plots/avg_queue_lengths')
 
+g = sns.lmplot(x='required cpu time',
+                   y='turnaround stat',
+                   data=df,
+                   hue='scheduler',
+                   col='process sizes',
+                   sharex=False,
+                   sharey=False
+                   )
+plt.savefig('Plots/cpu_time_x_turnaround_stat_y')
 
 g = sns.lmplot(x='start_times',
                    y='finish times',
@@ -102,30 +101,7 @@ g = sns.lmplot(x='start_times',
 g.despine(left=True)
 plt.legend(loc='upper right')
 plt.savefig('Plots/start_times_v_finish_times')
-plt.show()
-
-exit(0)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-g = sns.factorplot(x='plist configuration',
-                   y='average queue lengths',
-                   hue='scheduler',
-                   data=df,
-                   size=8,
-                   kind="bar",
-                   palette="muted"
-                   )
-plt.show()
 
