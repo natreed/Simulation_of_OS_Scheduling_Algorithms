@@ -15,9 +15,7 @@ class SJF(Sched_base):
             return
 
         for i, process in enumerate(self.ready_list):
-            if process.required_cpu_time > new_proc.required_cpu_time:
-                process.cpu_time_remaining = process.required_cpu_time - new_proc.time_slice
-                process.total_runtime += process.time_slice
+            if process.cpu_time_remaining > new_proc.cpu_time_remaining:
                 self.ready_list.insert(i, new_proc)
                 return
 
