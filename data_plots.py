@@ -2,7 +2,6 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns; sns.set(style="ticks", color_codes=True)
 
-colors = ["dark red", "dark yellow", "dark blue", "dark orange"]
 
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
@@ -12,7 +11,6 @@ g = sns.lmplot(x='pids',
                    hue='scheduler',
                    data=df,
                    size=8,
-                   palette= sns.xkcd_palette(colors)
                    )
 plt.savefig('Plots/pids_x_total_wait_y')
 g = sns.factorplot(x='plist configuration',
@@ -21,7 +19,7 @@ g = sns.factorplot(x='plist configuration',
                    data=df,
                    size=8,
                    kind="bar",
-                   palette= sns.xkcd_palette(colors)
+                   palette= "muted"
                    )
 plt.savefig('Plots/config_x_avg_queue_lens_y')
 
@@ -31,7 +29,6 @@ g = sns.lmplot(x='pids',
                    hue ='scheduler',
                    col='process sizes',
                    legend=False,
-                   palette= sns.xkcd_palette(colors)
                    )
 g.despine(left=True)
 plt.legend(loc='upper right')
@@ -45,7 +42,6 @@ g = sns.lmplot(x='required cpu time',
                    legend=False,
                    sharex=False,
                    sharey=False,
-                   palette= sns.xkcd_palette(colors)
                    )
 g.despine(left=True)
 plt.legend(loc='upper right')
@@ -57,7 +53,7 @@ g = sns.factorplot(x='scheduler',
                    data=df,
                    size=8,
                    kind="bar",
-                   palette= sns.xkcd_palette(colors)
+                   palette= "muted"
                    )
 plt.savefig('Plots/average_response_time_hist')
 
@@ -67,7 +63,7 @@ g = sns.factorplot(x='scheduler',
                    data=df,
                    size=8,
                    kind="bar",
-                   palette= sns.xkcd_palette(colors)
+                   palette= "muted"
                    )
 plt.savefig('Plots/throughput')
 
@@ -77,7 +73,7 @@ g = sns.factorplot(x='scheduler',
                    data=df,
                    size=8,
                    kind="bar",
-                   palette= sns.xkcd_palette(colors)
+                   palette= "muted"
                    )
 plt.savefig('Plots/avg_queue_lengths')
 
@@ -88,7 +84,6 @@ g = sns.lmplot(x='required cpu time',
                    col='process sizes',
                    sharex=False,
                    sharey=False,
-                   palette= sns.xkcd_palette(colors)
                    )
 plt.savefig('Plots/cpu_time_x_turnaround_stat_y')
 
@@ -100,7 +95,6 @@ g = sns.lmplot(x='start_times',
                    sharex=False,
                    sharey=False,
                    legend=False,
-                   palette= sns.xkcd_palette(colors)
                    )
 g.despine(left=True)
 plt.legend(loc='upper right')
