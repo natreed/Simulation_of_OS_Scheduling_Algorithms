@@ -7,15 +7,14 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
-g = sns.lmplot(x='pids',
-                   y='total wait times',
-                   hue='scheduler',
+g = sns.factorplot(x='scheduler',
+                   y='average wait times',
                    data=df,
                    size=8,
+                   kind='bar',
                    #palette= sns.xkcd_palette(colors)
                    )
-plt.savefig('Plots/pids_x_total_wait_y_500-100k')
-
+plt.savefig('Plots/avg_wait')
 
 
 g = sns.factorplot(x='plist configuration',
@@ -27,19 +26,6 @@ g = sns.factorplot(x='plist configuration',
                    #palette= sns.xkcd_palette(colors)
                    )
 plt.savefig('Plots/config_x_avg_queue_lens_y')
-
-g = sns.lmplot(x='pids',
-                   y='turnaround stat',
-                   data = df,
-                   hue ='scheduler',
-                   col='process sizes',
-                   legend=False,
-                   #palette= sns.xkcd_palette(colors)
-                   )
-g.despine(left=True)
-plt.legend(loc='upper right')
-plt.savefig('Plots/pids_x_turnaround_stat_y')
-
 
 g = sns.lmplot(x='required cpu time',
                    y='turnaround times',
@@ -64,19 +50,17 @@ g = sns.factorplot(x='scheduler',
                    )
 plt.savefig('Plots/average_response_time_hist')
 
-
 g = sns.factorplot(x='scheduler',
-                   y='throughput',
+                   y='efficiency',
                    data=df,
                    size=8,
                    kind="bar",
                    #palette= sns.xkcd_palette(colors)
                    )
-plt.savefig('Plots/throughput')
+plt.savefig('Plots/scheduler_x_efficiency_y')
 
 g = sns.factorplot(x='scheduler',
                    y='average queue length',
-                   hue='scheduler',
                    data=df,
                    size=8,
                    kind="bar",
@@ -84,7 +68,7 @@ g = sns.factorplot(x='scheduler',
                    )
 plt.savefig('Plots/avg_queue_lengths')
 
-g = sns.lmplot(x='required cpu time',
+g = sns.lmplot(x='instantiation times',
                    y='turnaround stat',
                    data=df,
                    hue='scheduler',
@@ -93,7 +77,7 @@ g = sns.lmplot(x='required cpu time',
                    sharey=False,
                    #palette= sns.xkcd_palette(colors)
                    )
-plt.savefig('Plots/cpu_time_x_turnaround_stat_y')
+plt.savefig('Plots/instantiation_times_x_turnaround_stat_y')
 
 g = sns.lmplot(x='start_times',
                    y='finish times',

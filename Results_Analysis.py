@@ -16,22 +16,27 @@ class Simsched_Analysis(object):
     # ANALYZER FUNCTIONS
 
     # total wait time per process
-    def get_queue_wait_time(self, arrival_times):
+    def get_avg_wait_time(self):
         qwt = 0
-        for i in range(1, len(arrival_times)):
-            qwt += (arrival_times[i] - arrival_times[i - 1]) + \
-                   (self.plist[i].start_time - self.plist[i].instantiation_time)
-        return qwt
+        ct = 0
 
+        for proc in self.plist:
+            for i in range(1, len(proc.cpu_arrival)):
+                qwt += proc.cpu_arrival[i] - proc.cpu_arrival[i-1]
+                ct += len(proc.cpu_arrival)
+            qwt += (proc.start_time - proc.instantiation_time)
+            ct += 1
+        avg = qwt/ct
+        return avg
 
     # This could be one measure of fairness. We could easily analyze distribution
     # of total wait times per process. Good graph material.
     def get_sim_qwts(self):
         qwts = []
         for i in range(0, len(self.plist)):
-            qwts.append(self.get_queue_wait_time(self.plist[i].cpu_arrival))
+            qwts.append(self.get_avg_wait_time(self.plist[i].cpu_arrival))
 
-        self.sim_stats.qwts = qwts
+        self.sim_stats.avg_qwts = qwts
         return qwts
 
 
@@ -64,6 +69,8 @@ class Simsched_Analysis(object):
         for i in range(0, self.plist_len):
             avg_qlens.append(round(sum(self.plist[i].queue_lens)/self.plist[i].fetch_count, 1))
         return avg_qlens
+
+        # list of average queue lengths for each process
 
     def get_overall_avg_qlens(self):
         return ceil(self.get_avg_proc_qlens()/self.plist_len)
@@ -132,7 +139,7 @@ class Simsched_Analysis(object):
         sim_stats = self.sim_stats
         sim_stats.config_name = self.plist_config
         sim_stats.sched_name = self.sched_name
-        sim_stats.qwts = self.get_sim_qwts()
+        sim_stats.avg_qwts = self.get_avg_wait_time()
         sim_stats.turnaround_times = self.get_turnaround_times()
         sim_stats.avg_queue_len = self.get_avg_sim_queue_len()
         sim_stats.avg_proc_qlens = self.get_avg_proc_qlens()
@@ -154,6 +161,7 @@ class Simsched_Analysis(object):
             sim_stats.throughput_rpt.append(sim_stats.throughput)
             sim_stats.avg_queue_len_rpt.append(sim_stats.avg_queue_len)
             sim_stats.avg_response_time_rpt.append(sim_stats.avg_response_time)
+            sim_stats.avg_qwts_rpt.append(sim_stats.avg_qwts)
 
         # TODO: add more stats
         return sim_stats
@@ -180,14 +188,14 @@ class Simsched_Analysis(object):
             stat_writer.writerow(["instantiation times"] + st.instantiation_times)
             stat_writer.writerow(["start times"] + st.start_times)
             stat_writer.writerow(["finish times"] + st.finish_times)
-            stat_writer.writerow(["total wait times"] + st.qwts)
+            stat_writer.writerow(["average wait times"] + st.avg_qwts_rpt)
             stat_writer.writerow(["turnaround times"] + st.turnaround_times)
             stat_writer.writerow(["average queue lengths"] + st.avg_proc_qlens)
             stat_writer.writerow(["response times"] + st.response_times)
             stat_writer.writerow(["required cpu times"] + st.required_cpu_times)
             stat_writer.writerow(["process sizes"] + st.proc_sizes)
             stat_writer.writerow(["turnaround times"] + st.turnaround_div_rt)
-            stat_writer.writerow(["throughput"] + [st.throughput])
+            stat_writer.writerow(["efficiency"] + [st.throughput])
             stat_writer.writerow(["average response time"] + [st.avg_response_time])
             stat_writer.writerow(["average queue length"] + [st.avg_queue_len])
         Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.config_name +
@@ -202,14 +210,14 @@ class Simsched_Analysis(object):
                         ["instantiation times"],
                         ["start_times"],
                         ["finish times"],
-                        ["total wait times"],
+                        ["average wait times"],
                         ["turnaround times"],
                         ["average queue lengths"],
                         ["response times"],
                         ["required cpu time"],
                         ["process sizes"],
                         ["turnaround stat"],
-                        ["throughput"],
+                        ["efficiency"],
                         ["average response time"],
                         ["average queue length"]]
 
@@ -228,7 +236,7 @@ class Simsched_Analysis(object):
                 elif i == 5:
                     csv_fmt[i] += (sim_stats[j].finish_times)
                 elif i == 6:
-                    csv_fmt[i] += (sim_stats[j].qwts)
+                    csv_fmt[i] += (sim_stats[j].avg_qwts_rpt)
                 elif i == 7:
                     csv_fmt[i] += (sim_stats[j].turnaround_times)
                 elif i == 8:
@@ -274,7 +282,8 @@ class Sim_stats(object):
         self.start_times = []
         self.plist_config_rpt = []
         self.sched_name_rpt = []
-        self.qwts = []
+        self.avg_qwts = 0
+        self.avg_qwts_rpt = []
         self.turnaround_times = []
         self.avg_queue_len = 0
         self.avg_queue_len_rpt = []
