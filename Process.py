@@ -1,6 +1,6 @@
 import enum
 
-DEFAULT_BUDGET = 200
+DEFAULT_BUDGET = 50
 
 #States that a
 class P_State(enum.Enum):

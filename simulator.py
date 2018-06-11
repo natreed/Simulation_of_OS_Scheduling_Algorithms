@@ -12,8 +12,7 @@ import copy
 TIMESLICE = 20
 
 if __name__ == '__main__':
-    schedulers = [MLFQ(TIMESLICE), RR(TIMESLICE), CFS(TIMESLICE)]
-    #schedulers =[FCFS(TIMESLICE), SJF(TIMESLICE)]
+    schedulers = [CFS(TIMESLICE), MLFQ(TIMESLICE), RR(TIMESLICE)]
     sim_stats = []
     #for config in plist_rt_spec:
 
