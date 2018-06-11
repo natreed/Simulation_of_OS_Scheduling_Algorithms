@@ -19,4 +19,5 @@ class RR(Sched_base):
             return self.ready_list.pop(0)
 
     def get_overhead(self):
-        return ceil(len(self.ready_list)/2)
+        # return ceil(len(self.ready_list)/2)
+        return 1

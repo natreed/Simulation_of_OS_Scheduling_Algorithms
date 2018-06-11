@@ -4,9 +4,8 @@ from math import ceil
 import enum
 
 class plist_rt_spec(enum.Enum):
-    RAND = 0
-    WLONG = 1
-    WSRT = 2
+    WLONG = 0
+    WSRT = 1
 
 class build_procs_data(object):
     def __init__(self, spec):
@@ -16,9 +15,7 @@ class build_procs_data(object):
         self.spec = spec
         self.instantiation_times = instantiation_times_gen(self.list_size)
         # Different proc_list possibilities
-        if spec == plist_rt_spec.RAND:
-            self.runtimes = random_runtimes_gen(self.list_size)
-        elif spec == plist_rt_spec.WSRT:
+        if spec == plist_rt_spec.WSRT:
             self.runtimes = weighted_short_runtimes_gen(self.list_size)
         elif spec == plist_rt_spec.WLONG:
             self.runtimes = weighted_long_runtimes_gen(self.list_size)
@@ -73,10 +70,8 @@ def random_runtimes_gen(list_size):
 def instantiation_times_gen(list_size):
     instantiation_times = []
     for i in range(0, list_size):
-        instantiation_times.append(random.randint(0,100000))
+        instantiation_times.append(random.randint(0,20000))
     return sorted(instantiation_times)
-
-
 
 # Generate Process List
 def plist_gen(bpd):

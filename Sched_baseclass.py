@@ -25,7 +25,7 @@ class Sched_base(object):
         raise NotImplementedError
 
     def queue_len(self):
-        return len(self.ready_list) + 1
+        return len(self.ready_list)
 
     def peek_next_itime(self, proc_list):
         if len(proc_list) > 0:
@@ -35,7 +35,8 @@ class Sched_base(object):
 
     def switch_to_ready(self, proc):
         proc.cpu_arrival.append(self.SIMTIME)
-        self.SIMTIME += (proc.time_slice + self.get_overhead())
+        # self.SIMTIME += (proc.time_slice + self.get_overhead())
+        self.SIMTIME += proc.time_slice
         proc.cpu_time_remaining -= proc.time_slice
         proc.p_budget -= proc.time_slice  # for MLFQ
         proc.p_state = P_State.READY
@@ -72,7 +73,6 @@ class Sched_base(object):
                     if new_proc.instantiation_time > self.SIMTIME:
                         self.SIMTIME = new_proc.instantiation_time
                     self.put_process(new_proc)
-                    self.SIMTIME += self.get_overhead()  # process has not yet been added to ready list
                 else:
                     # case: empty scheduler and empty proc_list
                     break

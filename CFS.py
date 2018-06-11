@@ -5,8 +5,6 @@
 from Sched_baseclass import Sched_base
 import math
 
-CFS_TIMESLICE = 10
-
 class CFS(Sched_base):
     def __init__(self, _time_slice):
         super().__init__(_time_slice)
@@ -44,15 +42,11 @@ class CFS(Sched_base):
 
     def calculate_tslice(self):
         # keep burst in range 1 - 20
-        while True:
-            try:
-                nprc = self.time_slice / ((len(self.ready_list) + 1))
-                if nprc >= 1 and nprc <= 20:
-                    break
-                if nprc < 1:
-                    self.time_slice += 4
-                if nprc > 20:
-                    self.time_slice -= 4
-            except Exception:
-                print("broke")
+        sched_period = 20
+        min_granularity = 4
+        nr_running = len(self.ready_list) + 1
+
+        if nr_running > sched_period/min_granularity:
+            sched_period = min_granularity * nr_running
+        nprc = sched_period/nr_running
         return nprc

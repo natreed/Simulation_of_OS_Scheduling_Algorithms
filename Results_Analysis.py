@@ -19,7 +19,8 @@ class Simsched_Analysis(object):
     def get_queue_wait_time(self, arrival_times):
         qwt = 0
         for i in range(1, len(arrival_times)):
-            qwt += (arrival_times[i] - arrival_times[i - 1])
+            qwt += (arrival_times[i] - arrival_times[i - 1]) + \
+                   (self.plist[i].start_time - self.plist[i].instantiation_time)
         return qwt
 
 
