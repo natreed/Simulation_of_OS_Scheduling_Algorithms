@@ -7,6 +7,17 @@ import seaborn as sns; sns.set(style="ticks", color_codes=True)
 # Read dataset
 df = pd.read_csv('sim_stats.csv')
 
+
+g = sns.factorplot(x='scheduler',
+                   y='average wait times',
+                   data=df,
+                   size=8,
+                   kind='bar',
+                   #palette= sns.xkcd_palette(colors)
+                   )
+plt.savefig('Plots/avg_wait_500_100k')
+exit(0
+     )
 g = sns.factorplot(x='scheduler',
                    y='efficiency',
                    data=df,
@@ -16,14 +27,7 @@ g = sns.factorplot(x='scheduler',
                    )
 plt.savefig('Plots/scheduler_x_efficiency_y_500_100k')
 exit(0)
-g = sns.factorplot(x='scheduler',
-                   y='average wait times',
-                   data=df,
-                   size=8,
-                   kind='bar',
-                   #palette= sns.xkcd_palette(colors)
-                   )
-plt.savefig('Plots/avg_wait_500_100k')
+
 
 g = sns.lmplot(x='instantiation times',
                    y='turnaround stat',

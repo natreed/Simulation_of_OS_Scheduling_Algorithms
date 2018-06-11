@@ -23,9 +23,8 @@ class Simsched_Analysis(object):
         for proc in self.plist:
             for i in range(1, len(proc.cpu_arrival)):
                 qwt += proc.cpu_arrival[i] - proc.cpu_arrival[i-1]
-                ct += len(proc.cpu_arrival)
+            ct += (len(proc.cpu_arrival))
             qwt += (proc.start_time - proc.instantiation_time)
-            ct += 1
         avg = qwt/ct
         return avg
 
