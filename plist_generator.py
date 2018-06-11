@@ -70,7 +70,7 @@ def random_runtimes_gen(list_size):
 def instantiation_times_gen(list_size):
     instantiation_times = []
     for i in range(0, list_size):
-        instantiation_times.append(random.randint(0,20000))
+        instantiation_times.append(random.randint(0,100000))
     return sorted(instantiation_times)
 
 # Generate Process List
