@@ -3,7 +3,7 @@ from Process import P_Priority, DEFAULT_BUDGET
 from math import ceil
 
 
-TTP = 1500  #time to promote
+TTP = 10000  #time to promote
 
 class MLFQ(Sched_base):
 
@@ -14,9 +14,10 @@ class MLFQ(Sched_base):
             self.ready_list.insert(0, [])
         self.time_to_promote = TTP
         self.num_queues = len(P_Priority)
+        self.time_slice_list = [20, 30, 30, 40]
 
     def queue_len(self):
-        return sum(list(map(lambda x: len(x),self.ready_list)))  # add 1 to match base implementation?
+        return sum(list(map(lambda x: len(x),self.ready_list))) + 1 # add 1 to match base implementation?
 
     def get_overhead(self):
         #return ceil(self.queue_len()/2) + 1
@@ -41,15 +42,16 @@ class MLFQ(Sched_base):
         proc.p_priority = P_Priority(queue + 1)
         self.ready_list[proc.p_priority.value].append(proc)
         proc.p_budget = DEFAULT_BUDGET
+        proc.time_slice = self.time_slice_list[proc.p_priority.value]
 
     def promotion_check(self):
         time = self.SIMTIME
         if time >= self.time_to_promote:
-            #print("promotion time!")
             for i in range(1, self.num_queues):
                 for j in range (0, len(self.ready_list[i])):
                     self.ready_list[i][j].p_priority = P_Priority.ZERO
                     self.ready_list[i][j].p_budget = DEFAULT_BUDGET
+                    self.ready_list[i][j].time_slice = self.time_slice_list[0]
                 self.ready_list[0] += self.ready_list[i]
                 self.ready_list[i].clear()
             self.time_to_promote += TTP
@@ -60,8 +62,5 @@ class MLFQ(Sched_base):
             for j in range (0, len(self.ready_list[i])):
                 if self.ready_list[i][j].p_budget > 0:
                     return self.ready_list[i].pop(j)
-                    #okay to leave potential processes with below
-                    # budgets at head of list?  won't be scheduled
-                    # and will get demoted when put is called next
         self.empty = True
         return None
