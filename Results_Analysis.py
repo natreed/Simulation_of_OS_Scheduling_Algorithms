@@ -15,7 +15,9 @@ class Simsched_Analysis(object):
 
     # ANALYZER FUNCTIONS
 
-    # total wait time per process
+    # Average wait time for scheduler simulation. Sum total of
+    # queue wait times for all processes divided by the sum total
+    # of the total number of times each process waited for the CPU.
     def get_avg_wait_time(self):
         qwt = 0
         ct = 0
@@ -28,17 +30,7 @@ class Simsched_Analysis(object):
         avg = qwt/ct
         return avg
 
-    # This could be one measure of fairness. We could easily analyze distribution
-    # of total wait times per process. Good graph material.
-    def get_sim_qwts(self):
-        qwts = []
-        for i in range(0, len(self.plist)):
-            qwts.append(self.get_avg_wait_time(self.plist[i].cpu_arrival))
-
-        self.sim_stats.avg_qwts = qwts
-        return qwts
-
-
+    # Turnaround time = Finish time - Arrival time
     def get_turnaround_times(self):
         tts = []
         for i in range(0, self.plist_len):
@@ -46,6 +38,7 @@ class Simsched_Analysis(object):
                        self.plist[i].instantiation_time
                        )
         return tts
+
 
     def get_turnaround_over_sz(self):
         tos = []
@@ -69,50 +62,53 @@ class Simsched_Analysis(object):
             avg_qlens.append(round(sum(self.plist[i].queue_lens)/self.plist[i].fetch_count, 1))
         return avg_qlens
 
-        # list of average queue lengths for each process
-
-    def get_overall_avg_qlens(self):
-        return ceil(self.get_avg_proc_qlens()/self.plist_len)
-
+    # List of response times for each process
     def get_response_times(self):
         response_times = []
         for i in range(0, self.plist_len):
             response_times.append(self.plist[i].start_time - self.plist[i].instantiation_time)
         return response_times
 
+    # Average response time for simulation
     def avg_response_time(self):
         return sum(self.get_response_times())/self.plist_len
 
+    # Process start times
     def get_start_times(self):
         start_times = []
         for i in range(0, self.plist_len):
             start_times.append(self.plist[i].start_time)
         return start_times
 
+    # Generates list of Arrival/Instantiation times
     def get_instantiation_times(self):
         itimes = []
         for i in range(0, self.plist_len):
             itimes.append(self.plist[i].instantiation_time)
         return itimes
 
+    # Generates list of finish times
     def get_finish_times(self):
         ftimes = []
         for i in range(0, self.plist_len):
             ftimes.append(self.plist[i].finish_time)
         return ftimes
 
+    #Generates list of required cpu times
     def get_cpu_runtimes(self):
         rts = []
         for i in range(0, self.plist_len):
             rts.append(self.plist[i].required_cpu_time)
         return rts
 
+    # Generates list of pids
     def get_pids(self):
         pids = []
         for i in range(0, self.plist_len):
             pids.append(self.plist[i].pid)
         return pids
 
+    # Generates list of process sizes tiny: 0-50, small: 50-200, large: 200-1000
     def get_proc_sizes(self):
         sizes = []
         for i in range(0, self.plist_len):
@@ -124,6 +120,8 @@ class Simsched_Analysis(object):
                 sizes.append('TINY')
         return sizes
 
+    # This is the sum of all required cpu times divided by total sim time.
+    # In the report we refer to it as efficiency.
     def get_throughput(self):
         sum_cpu_time = 0
         for i in range(0, self.plist_len):
@@ -133,7 +131,7 @@ class Simsched_Analysis(object):
         throughput = sum_cpu_time/sim_time
         return throughput
 
-    # contains the results
+    # Aggregates data into results container.
     def get_sim_stats(self):
         sim_stats = self.sim_stats
         sim_stats.config_name = self.plist_config
@@ -175,6 +173,7 @@ class Simsched_Analysis(object):
 
         Simsched_Analysis.transpose_csv('sim_stats.csv')
 
+    # Create results file for single scheduler
     @staticmethod
     def create_results_file(sim_stats):
         st = sim_stats
@@ -199,6 +198,7 @@ class Simsched_Analysis(object):
         Simsched_Analysis.transpose_csv('CSV_Data/' + sim_stats.config_name +
                                         '_' + sim_stats.sched_name + '_stats.csv')
 
+    # Create csv file of all aggregated results
     @staticmethod
     def all_vals(sim_stats, csvfile):
 
@@ -267,7 +267,8 @@ class Simsched_Analysis(object):
             for i in range(len(max(cols, key=len))):
                 writer.writerow([(c[i].strip() if i<len(c) else '') for c in cols])
 
-
+# Container for scheduler simulation data.
+# RPT extensions are just for compiling csv files
 class Sim_stats(object):
     def __init__(self):
         self.config_name = ""

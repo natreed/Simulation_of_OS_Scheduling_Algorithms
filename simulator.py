@@ -6,24 +6,26 @@ from MLFQ import MLFQ
 from SJF import SJF
 from plist_generator import build_procs_data, plist_gen, plist_rt_spec
 from Results_Analysis import Simsched_Analysis, Sim_stats
-from data_plots import plotResults
 import copy
 
 
 TIMESLICE = 20
 
-#Creates results in Plot folder.  Change instantiation time range for scheduler load in
-# plist_generator.py method - instantiation_times_gen() by changing
-# the upper bound on line: instantiation_times.append(random.randint(0, 100000))
 if __name__ == '__main__':
-    schedulers = [CFS(TIMESLICE), MLFQ(TIMESLICE), RR(TIMESLICE)]
-    #schedulers = [FCFS(TIMESLICE), SJF(TIMESLICE)]
+    # Configure list of schedulers to be analyzed
+    schedulers = [CFS(TIMESLICE), MLFQ(TIMESLICE), RR(TIMESLICE), SJF(TIMESLICE), FCFS(TIMESLICE)]
     sim_stats = []
+    #for config in plist_rt_spec:
 
+    # Outer loop through WSRT, WLONG configurations
     for config in plist_rt_spec:
+        # Generate processes with randomized arrival times and runtimes
         bpd = build_procs_data(config)
         plist = plist_gen(bpd)
+        # Run each scheduler on same generated processes
         for scheduler in schedulers:
+            # Call run to start the scheduler. Proc stats is the list of finished processes in order
+            # of finish time
             proc_stats = scheduler.run(copy.deepcopy(plist))
             analyzer = Simsched_Analysis(proc_stats, scheduler.name, config)
             st = analyzer.get_sim_stats()
@@ -31,6 +33,5 @@ if __name__ == '__main__':
             analyzer.create_results_file(st)
 
     analyzer.create_results_csv(sim_stats)
-    plotResults()
 
-    print("Ran simulation.")
+    print("Hello")
