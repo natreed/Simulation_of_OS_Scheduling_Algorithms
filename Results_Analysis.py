@@ -162,7 +162,6 @@ class Simsched_Analysis(object):
             sim_stats.avg_response_time_rpt.append(sim_stats.avg_response_time)
             sim_stats.avg_qwts_rpt.append(sim_stats.avg_qwts)
 
-        # TODO: add more stats
         return sim_stats
 
     @staticmethod

@@ -17,7 +17,7 @@ class MLFQ(Sched_base):
         self.time_slice_list = [20, 30, 30, 40]
 
     def queue_len(self):
-        return sum(list(map(lambda x: len(x),self.ready_list))) + 1 # add 1 to match base implementation?
+        return sum(list(map(lambda x: len(x),self.ready_list))) + 1
 
     def get_overhead(self):
         #return ceil(self.queue_len()/2) + 1

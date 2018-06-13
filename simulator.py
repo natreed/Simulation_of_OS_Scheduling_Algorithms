@@ -6,15 +6,19 @@ from MLFQ import MLFQ
 from SJF import SJF
 from plist_generator import build_procs_data, plist_gen, plist_rt_spec
 from Results_Analysis import Simsched_Analysis, Sim_stats
+from data_plots import plotResults
 import copy
 
 
 TIMESLICE = 20
 
+#Creates results in Plot folder.  Change instantiation time range for scheduler load in
+# plist_generator.py method - instantiation_times_gen() by changing
+# the upper bound on line: instantiation_times.append(random.randint(0, 100000))
 if __name__ == '__main__':
     schedulers = [CFS(TIMESLICE), MLFQ(TIMESLICE), RR(TIMESLICE)]
+    #schedulers = [FCFS(TIMESLICE), SJF(TIMESLICE)]
     sim_stats = []
-    #for config in plist_rt_spec:
 
     for config in plist_rt_spec:
         bpd = build_procs_data(config)
@@ -27,5 +31,6 @@ if __name__ == '__main__':
             analyzer.create_results_file(st)
 
     analyzer.create_results_csv(sim_stats)
+    plotResults()
 
-    print("Hello")
+    print("Ran simulation.")

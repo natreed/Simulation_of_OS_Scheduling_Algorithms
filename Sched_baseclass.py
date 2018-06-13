@@ -98,6 +98,6 @@ class Sched_base(object):
                 proc.p_state = P_State.FINISHED
                 self.finished_list.append(proc)
 
-        print(self.SIMTIME)
-        print(self.finished_list[len(self.finished_list) - 1].required_cpu_time)
+        #print(self.SIMTIME)
+        #print(self.finished_list[len(self.finished_list) - 1].required_cpu_time)
         return self.finished_list
