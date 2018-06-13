@@ -28,6 +28,3 @@ class SJF(Sched_base):
             return None
         else:
             return self.ready_list.pop(0)
-
-    def get_overhead(self):
-        return ceil(len(self.ready_list)/2)

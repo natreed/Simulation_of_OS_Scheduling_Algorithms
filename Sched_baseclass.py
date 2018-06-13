@@ -17,13 +17,6 @@ class Sched_base(object):
     def fetch_process(self):
         raise NotImplementedError
 
-    # Get overhead calculates the simtime overhead for a context switch
-    # Insertion overhead varies between scheduling algorithms.
-    # We use average complexity: List insertion = n/2, Tree insertion = log(n)
-    @classmethod
-    def get_overhead(self):
-        raise NotImplementedError
-
     def queue_len(self):
         return len(self.ready_list)
 
@@ -33,15 +26,16 @@ class Sched_base(object):
         else:
             return -1
 
+    # process state and meta-data updated to reflect switch to ready
     def switch_to_ready(self, proc):
         proc.cpu_arrival.append(self.SIMTIME)
-        # self.SIMTIME += (proc.time_slice + self.get_overhead())
         self.SIMTIME += proc.time_slice
         proc.cpu_time_remaining -= proc.time_slice
         proc.p_budget -= proc.time_slice  # for MLFQ
         proc.p_state = P_State.READY
         proc.next_state = P_State.RUNNING
 
+    # process state and meta-data updated to reflect switch to run
     def switch_to_run(self, proc):
         self.SIMTIME += 1
         if proc.p_state == P_State.CREATED:
@@ -98,6 +92,4 @@ class Sched_base(object):
                 proc.p_state = P_State.FINISHED
                 self.finished_list.append(proc)
 
-        #print(self.SIMTIME)
-        #print(self.finished_list[len(self.finished_list) - 1].required_cpu_time)
         return self.finished_list

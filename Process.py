@@ -17,7 +17,7 @@ class P_Priority(enum.Enum):
     TWO = 2
     THREE = 3
 
-#TODO: Could include a blocking timeout. To keep it simple
+#TODO: Did not include blocking conditions to keep it simple
 #starting with only required cpu time.
 #The process is just the state of the process. The scheduler
 #will make changes as necessary to the process state
@@ -35,7 +35,7 @@ class Process(object):
         self.cpu_arrival = []
         # Queue length and fetch count will be aggregated across all processes
         # in the simulation and used to calculate avg queue length.
-        # queue lengths when process is scheduled.
+        # queue lengths are taken each time process is scheduled.
         self.queue_lens = []
         #number of times scheduled
         self.fetch_count = 0

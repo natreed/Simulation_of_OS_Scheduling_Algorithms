@@ -1,5 +1,4 @@
-# Algorithm comes from
-# https://tampub.uta.fi/bitstream/handle/10024/96864/GRADU-1428493916.pdf
+# Algorithm comes from the Kobus paper
 
 
 from Sched_baseclass import Sched_base
@@ -10,6 +9,8 @@ class CFS(Sched_base):
         super().__init__(_time_slice)
         self.name = "CFS"
 
+    # Insert based on total virtual runtime. Tree data structure was not
+    # necessary to implement simulation.
     def put_process(self, new_proc):
         if len(self.ready_list) == 0:
             new_proc.time_slice = self.time_slice
@@ -34,18 +35,15 @@ class CFS(Sched_base):
             return None
         return self.ready_list.pop(0)
 
-    def get_overhead(self):
-        if len(self.ready_list) == 0:
-            return 1
-        overhead = math.ceil(math.log(len(self.ready_list), 2))
-        return overhead
 
+    # Taken from the paper on "Tuning" (Kobus)
     def calculate_tslice(self):
-        # keep burst in range 1 - 20
+        # Linux default period is 20. Granularity is 4.
         sched_period = 20
         min_granularity = 4
+        #num running processes
         nr_running = len(self.ready_list) + 1
-
+        # make period large enough to have a quantum of minimum granularity
         if nr_running > sched_period/min_granularity:
             sched_period = min_granularity * nr_running
         nprc = sched_period/nr_running
