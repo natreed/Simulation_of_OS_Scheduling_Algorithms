@@ -6,6 +6,7 @@ In our simulation, a process is  a collection of state variables and meta-data. 
 
 ## Scheduling related state:
 **pid:**  Process pids are ordered by process instantiation time or when a process is “CREATED”.
+
 **p_state:** The process’ current state.
 **next_state:** The next state transition.
 **required_cpu_time:** The total amount of cpu time needed for the process to complete.
