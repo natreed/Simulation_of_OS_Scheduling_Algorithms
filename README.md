@@ -1,4 +1,4 @@
-# sim_sched scheduling_simulator
+# Simulation of OS Scheduling Algorithms
 Compare contrast and model different scheduling algorithms in an OS simulation.
 
 Results for this experiment can be found here: 
