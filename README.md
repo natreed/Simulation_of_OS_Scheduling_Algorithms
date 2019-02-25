@@ -2,7 +2,7 @@
 Compare contrast and model different scheduling algorithms in an OS simulation.
 
 ## Simulated Processes: 
-In our simulation, a process is  a collection of state variables and meta-data. One of the state variables is the process state (CREATED, READY, RUNNING, ZOMBIE or FINISHED). We add an additional state, CREATED which means ‘READY but not yet run’. This state prompts the simulator to set the the process’ start time when its state is switched to RUNNING. We left out blocking for the scope of this study, so BLOCKED is not one of the states we use. Simulated processes also contain scheduling related state and other metadata that track runtime scheduler performance. 
+In this simulation, a process is  a collection of state variables and meta-data. One of the state variables is the process state (CREATED, READY, RUNNING, ZOMBIE or FINISHED). For the purposes of this simulation, an additional state, CREATED which means ‘READY but not yet run’. This state prompts the simulator to set the the process’ start time when its state is switched to RUNNING. The BLOCKED state was excluded. Simulated processes also contain scheduling related state and other metadata that track runtime scheduler performance. 
 
 ## Scheduling related state:
 **pid:**  Process pids are ordered by process instantiation time or when a process is “CREATED”.
